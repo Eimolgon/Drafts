@@ -13,7 +13,7 @@ b2 = 0.3                # Rider 2 CoM longitudinal position
 h1 = 0.9                # Rider 1 CoM height
 h2 = h1                 # Rider 2 CoM height
 
-me = 10                 # Extra mass
+me = 0                 # Extra mass
 be = -0.1               # Extra mass longitudinal position
 he = 29 * in2m          # Extra mass height
 
@@ -22,7 +22,7 @@ mt = m1 + m2 + mb + me  # Total mass
 w = 68.5 * in2m         # inch to m
 
 Rr = (26 * in2m)/2      # Rear wheel radius
-mux = 0.6               # Rear wheel friction coefficient
+mux = 0.8               # Rear wheel friction coefficient
 Rdr = 208.8/1000        # Rear drivetrain radius 
 Rdf = 144.2/1000        # Front drivetrain radius 34T (https://www.wolftoothcomponents.com/pages/chainring-diameter-by-tooth-count)
 Rc = 175/1000           # Crank length
