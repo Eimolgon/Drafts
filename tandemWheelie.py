@@ -8,14 +8,14 @@ in2m = 0.0254
 
 m1 = 70                 # Rider 1 mass
 m2 = 80                 # Rider 2 mass
-b1 = 0.9                # Rider 1 CoM longitudinal position
-b2 = 0.3                # Rider 2 CoM longitudinal position
-h1 = 0.9                # Rider 1 CoM height
-h2 = h1                 # Rider 2 CoM height
+b1 = 0.6                # Rider 1 CoM longitudinal position / 0.9 original
+b2 = 0.0                # Rider 2 CoM longitudinal position / 0.3 original
+h1 = 0.75                # Rider 1 CoM height / 0.9 original
+h2 = 0.75                # Rider 2 CoM height
 
-me = 0                 # Extra mass
-be = -0.1               # Extra mass longitudinal position
-he = 29 * in2m          # Extra mass height
+me = 20                  # Extra mass / 0 original
+be = -0.15              # Extra mass longitudinal position
+he = ((3/4)*29) * in2m        # Extra mass height / 29 inch original
 
 mb = 40 * lb2kg         # lb to kg
 mt = m1 + m2 + mb + me  # Total mass
