@@ -2,10 +2,6 @@ import csv
 
 file = '/home/eimolgon/Documents/University/Other/dataset-yt2.csv'
 
-#with open(file, newline='') as csvfile:
-#    spamreader = csv.reader(csvfile, delimiter = ' ', quotechar = '|')
-#    for row in spamreader:
-#        print(', '.join(row))
 
 with open(file, newline = '') as csvfile:
     readFile = csv.reader(csvfile)
