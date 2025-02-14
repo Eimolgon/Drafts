@@ -8,16 +8,18 @@ in2m = 0.0254
 
 m1 = 72                 # Rider 1 mass
 m2 = 72                 # Rider 2 mass
-b1 = 1                  # Rider 1 CoM longitudinal position / 0.9 original
-b2 = 0.4                # Rider 2 CoM longitudinal position / 0.3 original
+b1 = 0.8                # Rider 1 CoM longitudinal position / 1  original green tandem
+b2 = 0.2                # Rider 2 CoM longitudinal position / 0.4 original green tandem
 h1 = 0.8                # Rider 1 CoM height / 0.9 original
 h2 = 0.8                # Rider 2 CoM height
 
-me = 30                 # Extra mass / 0 original
+me = 30                # Extra mass / 0 original
 be = -0.2               # Extra mass longitudinal position
 he = 0.9                # Extra mass height / 29 inch original
 
-mb = 12 + 17            # Bicycle mass
+mfront = 12
+mrear = 17
+mb = mfront + mrear     # Bicycle mass
 mt = m1 + m2 + mb + me  # Total mass
 w = 1.9                 # Wheelbase
 
@@ -32,6 +34,9 @@ b = (m1 * b1 + m2 * b2 + me * be)/mt
 h = (m1 * h1 + m2 * h2 + me * he)/mt
 
 # Wheelie limit force
+if h == 0.0 or b == 0.0:
+    h = 0.5
+    b = (mfront*w)/mb
 Xr = (b * mt * g)/h
 Tr = Xr * Rr 
 
