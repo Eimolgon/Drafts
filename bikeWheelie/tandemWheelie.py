@@ -53,21 +53,21 @@ in2m = 0.0254
 
 m1 = 72                 # Rider 1 mass
 m2 = 72                 # Rider 2 mass
-b1 = 0.8                # Rider 1 CoM longitudinal position / 1  original green tandem
-b2 = 0.2                # Rider 2 CoM longitudinal position / 0.4 original green tandem
-h1 = 0.8                # Rider 1 CoM height / 0.9 original
-h2 = 0.8                # Rider 2 CoM height
+b1 = 0.707                # Rider 1 CoM longitudinal position / 1  original green tandem
+b2 = 0.117                # Rider 2 CoM longitudinal position / 0.4 original green tandem
+h1 = 0.621                # Rider 1 CoM height / 0.9 original
+h2 = 0.621                # Rider 2 CoM height
 
-me = 30                 # Extra mass / 0 original
-be = -0.2               # Extra mass longitudinal position
-he = 0.9                # Extra mass height / 29 inch original
+me = 70                 # Extra mass / 0 original
+be = -0.534               # Extra mass longitudinal position
+he = 0.310                # Extra mass height / 29 inch original
 
 w = 1.9                 # Wheelbase
 mfront = 12             
 mrear = 17
-mb = mfront + mrear     # Bicycle mass
-bb = (mfront*w)/mb      # Longitudinal CoM bike w/o riders
-hb = 0.5                # Completely random, needs to be checked
+mb = 30     # Bicycle mass
+bb = 0.799      # Longitudinal CoM bike w/o riders
+hb = 0.199                # Completely random, needs to be checked
 mt = m1 + m2 + mb + me  # Total mass
 
 
@@ -75,7 +75,8 @@ Rr = 0.25               # Rear wheel radius
 Rf = 0.34               # Front wheel radius
 mux = 0.8               # Rear wheel friction coefficient
 Rdr = 208.8/1000        # Rear drivetrain radius 
-Rdf = 144.2/1000        # Front drivetrain radius 34T (https://www.wolftoothcomponents.com/pages/chainring-diameter-by-tooth-count)
+Rdf = 208.8/1000
+#Rdf = 144.2/1000        # Front drivetrain radius 34T (https://www.wolftoothcomponents.com/pages/chainring-diameter-by-tooth-count)
 Rc = 175/1000           # Crank length
 
 # System CoM
