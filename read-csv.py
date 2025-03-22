@@ -13,4 +13,6 @@ with open(file, newline = '') as csvfile:
         end = int(lines[3])
         crash_type = lines[4]
         
-        print('Index: {idx}, Duration: {time_window}, Type: {crashClass}'.format(idx = idx, time_window = end-start, crashClass = crash_type))
+        print('Index: {idx}, Duration: {time_window}, Type: {crashClass}'
+              .format(idx = idx, time_window = end-start, 
+                      crashClass = crash_type))
