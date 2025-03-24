@@ -31,11 +31,26 @@
     \label{fig: flowchart}
 \end{figure}
 
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=\linewidth]{pitch-over.png}
+    \caption{Simple diagram of pitch-over motion.}
+    \label{fig: flowchart}
+\end{figure}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=\linewidth]{roll-over.png}
+    \caption{Simple diagram of roll-over motion.}
+    \label{fig: flowchart}
+\end{figure}
 \section{Introduction}
 
-This document aims to guide you to understand the proposed categorisation of single-actor bicycle crashes and categorise the sample sent to you.
+This document aims to guide you to understand the proposed classification \cite{Jac04} of single-actor bicycle-crashes and label the samples sent to you.
 
 \subsection{What is a Single-actor bicycle crash?}
+
+A single-actor bicycle-crash is an event where the normal riding of the bicycle is disrupted and ends in a crash with no other road users involved.
 
 \section{Bicycle dynamics-oriented classification}
 
@@ -47,11 +62,14 @@ This is related to the main motion of the rear frame of the bicycle while the cr
 %
 Due to the dynamics of the bicycle, and following the common simplification to its analysis, we find two main motions related to the degrees of freedom: pitch-over and roll-over.
 %
-Additionally, the roll-over motion includes its own sub-classification according to the side of the motion with respect to the original motion.
-% Rephrase this.
+Additionally, the roll-over motion includes its own sub-classification according to the direction of rotation with respect to the initial motion.
+% 
+Please visit \url{https://youtube.com/shorts/_etyqSpH10c?feature=shared} to watch an example of a crash where the final rotation is in the opposite direction of the initial motion.
+%
+This is particularly challenging to represent in a normal drawing so the visual explanation is on the make.
 
 \begin{itemize}
-    \item \textbf{Pitch-over (P):} The main characteristic of this motion is the rear wheel lifting from the ground and following a trajectory that finishes with the front wheel behind the rear wheel.
+    \item \textbf{Pitch-over (P):} The main characteristic of this motion is one of the wheels lifting from the ground and following a trajectory that finishes with the front wheel behind the rear wheel.
     \item \textbf{High-side (H):} Characterised for a sudden deceleration of the wheel while in lateral motion, which leads to a violent roll motion in the opposite direction of the initial motion.
     \item \textbf{Low-side (L):} The human-bicycle system follows an excessive roll motion in the same direction as at the beginning.
 \end{itemize}
@@ -75,7 +93,7 @@ External perturbations
 \begin{itemize}
     \item \textbf{Impulse (I):} Any excerted perturbation with a duration equal or under 0.5 [ms].
         %
-        This is because the average response time for a propioceptive {} is {} [ms].
+        This is because the average response time for a proprioceptive {} is {} [ms].
         %
         Therefore, the human is not capable of perform a controlled action to maintain the balance.
     \item \textbf{Rstrictive (E):} Excerted perturbations that are cyclical of continuous in time, where the human is capable of perferming a response but this is unsucessful.
@@ -94,12 +112,14 @@ Non-external perturbations
 
 Finally, together with the mechanisms, for external perturbations we can identify the direction where they act: longitudinal or lateral.
 %
-In line manner, these perturbations and slide mechanism can be differentiated according to the place of occurence within the system (front or rear).
+The nature of the direction is related to the motion generated on the bicycle, i.e. a longitudinal perturbation in the handlebar is analogous to a lateral perturbation in the front wheel, since both create a rotation of the steering.
+%
+In line manner, these perturbations and slide mechanisms can be differentiated according to the region of occurence within the system: front or rear.
 
 
 \section{Example}
 
-Use the following video \url{https://youtube.com/shorts/VZibdrdhdgM?feature=shared}.
+Let's do an example using the following video \url{https://youtube.com/shorts/VZibdrdhdgM?feature=shared}.
 
 First, it is observed that the main motion of the bicycle in the crash is related to roll angle.
 %
@@ -108,9 +128,9 @@ Additionally, it is in the same direction of the beginning of the motion.
 Therefore, this corresponds to the category low-side (L).
 
 
-Second, there are no visible perturbations that fit into the categories.
+Second, there are no visible perturbations that fit into the classification.
 %
-For this reason, we categorise it as non-externally perturbed (0).
+For this reason, we classify it as non-externally perturbed (0).
 
 
 Third, the mechanisms that best fits into the scenario is slide (S).
@@ -119,6 +139,12 @@ After a detailed examination, it is reasonable to assume that the event started 
 
 
 Finally, the classification of this crash would be \textbf{L0-SF}, front slide low side.
+
+\begin{thebibliography}{9}
+
+    \bibitem{Jac04} Elin K. Jacob (2004):  Classification and Categorization: A Difference that makes a Difference. Graduate School of Library and Information Science. University of Illinois at Urbana-Champaign. \url{http://hdl.handle.net/2142/1686}
+
+\end{thebibliography}
 
 
 \end{document}
