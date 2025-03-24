@@ -1,5 +1,6 @@
 import numpy as np
 import random
+import datetime
 
 def check_duplicate(samp: list) -> bool:
     '''
@@ -34,7 +35,19 @@ for i in participants:
     
     sorteo[i] = rand_list
 
-file = open('sorteo-result.txt', 'w')
+file = open('forms/sorteo-result.txt', 'w')
+
+file.write('Date: {0}'.format(datetime.datetime.now()) + '\n')
 
 for j in range(1, len(sorteo)+1):
     file.write('Participant {0}: '.format(j) + str(sorteo[j]) + '\n')
+    # print('Participant {0}: '.format(j) + str(sorteo[j]) + '\n')
+
+for k in range(1, n_participants+1):
+    file2 = open(f'forms/class-form-{k}.txt', 'w')
+    file2.write('Participant {}'.format(k) + '\n')
+    file2.write('============== \n \n')
+
+    for ik in range(len(sorteo[k])):
+        # print('Video {0}:'.format(sorteo[k][ik]) + '\n')
+        file2.write('Video {0}:'.format(sorteo[k][ik]) + '\n')
