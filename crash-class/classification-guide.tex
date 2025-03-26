@@ -24,9 +24,9 @@
 
 \maketitle
 
-\begin{figure}[h]
+\begin{figure}
     \centering
-    \includegraphics[width=\linewidth]{class-mindmap-v2.png}
+    \includegraphics[angle=90, height = \textheight]{class-mindmap-v2.png}
     \caption{Flowchart of bicycle crash classification.}
     \label{fig: flowchart}
 \end{figure}
@@ -76,36 +76,52 @@ This is particularly challenging to represent in a normal drawing so the visual 
 
 \section{Force}
 
-This category refers to the forces excerted on the human-bicycle system, where we find external perturbation or no external perturbation.
+For this research, the bicycle is assumed as an interface between the human and the environment.
+%
+Therefore, the bicycle is subjected to forces from the environment and also to forces created by the human.
+
 
 \begin{itemize}
-    \item \textbf{External forces (E):} Lorem ipsum.
-    \item \textbf{Rider forces (I):} Lorem ipsum.
+    \item \textbf{External forces (E):} Mechanical forces that result from the interaction of the human-bicycle system with the environment.
+    \item \textbf{Rider forces (I):} This makes reference to the control inputs from the human to the vehicle.
 \end{itemize}
 
 \section{Mechanism of crash}
 
+Here we detail mechanisms that made possible bicycle riding, however, in the analysis of crashes, we delve into the failure of these mechanisms.
+
 \subsection{External mechanisms}
 \begin{itemize}
-    \item \textbf{Tyre forces:}
-    \item \textbf{Aerodynamic forces:}
-    \item \textbf{Body excerted forces:}
+    \item \textbf{Tyre forces (T):} Forces acting in the tyre-ground interface, principally grip and normal. The failure mechanism is the slide.
+    \item \textbf{Aerodynamic forces (A):} Aerodynamic forces which are studied as a resultant in the centre of pressure of the system.
+    \item \textbf{Body excerted forces (D):} All forces that interact with the human bicycle system as contact inputs, e.g. collisions.
 \end{itemize}
 
 \subsection{Rider mechanisms}
 \begin{itemize}
-    \item \textbf{Brake input:}
-    \item \textbf{Steering torque:}
-    \item \textbf{Power input:}
+    \item \textbf{Brake input (B):} To decrease the speed, the rider has control on the brakes, which input can be erroneous and go out of the boundaries of their capabilities of control, resulting in excessive load transfer.
+    \item \textbf{Steering torque (S):} The main control input on the bicycle, this allows the rider to balance the bicycle as an inverted pendulum.
+    \item \textbf{Power input (W):} Pedal force applird from the rider, this creates the forward motion of the bicycle.
+        %
+        The failure mechanism is excessive load transfer or sudden disengagement of the foot-pedal interface.
 \end{itemize}
 
 \subsection{Location}
 
-Lorem ipsum ...
+We can identify the direction with respect to the reference frame of the bicycle where the force acts: longitudinal or lateral.
+%
+In line manner, it is possible to differenciate the region of the system where the main principal interaction occurs: front or rear.
 
 \section{Force characteristics}
 
-Lorem ipsum ...
+
+\begin{itemize}
+    \item \textbf{Step:} A force that instantaneously changes from zero to a constant value and remains at that level indefinitely. It represents a sudden application of force.
+    \item \textbf{Ramp:} A force that increases linearly with time, modeling a steadily growing input to a system.
+    \item \textbf{Impulse:} A high-magnitude force applied over a very short duration.
+    \item \textbf{Periodic:} A force that repeats at regular time intervals, such as sinusoidal.
+\end{itemize}
+
 
 \section{Example}
 
@@ -118,17 +134,19 @@ Additionally, it is in the same direction of the beginning of the motion.
 Therefore, this corresponds to the category low-side (L).
 
 
-Second, there are no visible perturbations that fit into the classification.
+Second, there are no visible wrong rider control inputs, which leads to a external force mechanism (E).
 %
-For this reason, we classify it as non-externally perturbed (0).
-
-
-Third, the mechanisms that best fits into the scenario is slide (S).
+Additionally, it is not possible to determine if aerodynamics played a major role and there is no visible external body perturbation.
 %
-After a detailed examination, it is reasonable to assume that the event started from the front wheel slide (F).
+For this reason, we conclude that the fail mechanism occurs at the tyre-ground interface (T), being reasonable to assume that the event started in the front wheel (F).
 
 
-Finally, the classification of this crash would be \textbf{L0-SF}, front slide low side.
+Third, from tyre mechanics it is known that tyres have a saturation margin where available grip reaches a limit.
+%
+In this case, this force relation can be assumed as an step force, where the available grip suddenly decreases and it is not recovered.
+
+
+Finally, the classification of this crash would be \textbf{LE-TF-Step}, front slide low side.
 
 \begin{thebibliography}{9}
 
