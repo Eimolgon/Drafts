@@ -26,7 +26,7 @@
 
 \begin{figure}
     \centering
-    \includegraphics[angle=90, height = \textheight]{class-mindmap-v2.png}
+    \includegraphics[angle=90, height = \textheight]{class-mindmap-v3.png}
     \caption{Flowchart of bicycle crash classification.}
     \label{fig: flowchart}
 \end{figure}
@@ -74,17 +74,24 @@ This is particularly challenging to represent in a normal drawing so the visual 
     \item \textbf{Low-side (L):} The human-bicycle system follows an excessive roll motion in the same direction as at the beginning.
 \end{itemize}
 
-\section{Force}
+\section{Excitation of the system}
 
 For this research, the bicycle is assumed as an interface between the human and the environment.
 %
-Therefore, the bicycle is subjected to forces from the environment and also to forces created by the human.
+Therefore, the bicycle is subjected to forces from the environment and from human control.
+%
+Additionally, the bicycle itself is a dynamic system which can present excitations in its motion, which are referred as internal excitations.
 
 
 \begin{itemize}
-    \item \textbf{External forces (E):} Mechanical forces that result from the interaction of the human-bicycle system with the environment.
-    \item \textbf{Rider forces (I):} This makes reference to the control inputs from the human to the vehicle.
+    \item \textbf{External excitations (Ext):} Mechanical forces that result from the interaction of the human-bicycle system with the environment.
+    \item \textbf{Internal excitations (Int):} Behaviour of the system due to its dynamical properties.
+        %
+        Its associated crash scenario is the excitation of a natural frequency of the system, creating an unstable and/or uncontrollable vehicle.
+    \item \textbf{Rider forces (Rid):} This makes reference to the control inputs from the human to the vehicle.
 \end{itemize}
+
+
 
 \section{Mechanism of crash}
 
@@ -97,6 +104,14 @@ Here we detail mechanisms that made possible bicycle riding, however, in the ana
     \item \textbf{Body excerted forces (D):} All forces that interact with the human bicycle system as contact inputs, e.g. collisions.
 \end{itemize}
 
+\subsection{Internal mechanisms}
+
+\textbf{Degree of Freedom (DoF):} This makes reference to unintended motions that result from the excitation of natural modes of the system.
+%
+The two most studied and dangerous modes when unstable are known as `weave' and `wobble', being the former related to roll and yaw, while the latter mainly related to steering.
+%
+It is important to clarify that these known modes come from the linear modeling of the bicycle.
+
 \subsection{Rider mechanisms}
 \begin{itemize}
     \item \textbf{Brake input (B):} To decrease the speed, the rider has control on the brakes, which input can be erroneous and go out of the boundaries of their capabilities of control, resulting in excessive load transfer.
@@ -105,6 +120,15 @@ Here we detail mechanisms that made possible bicycle riding, however, in the ana
         %
         The failure mechanism is excessive load transfer or sudden disengagement of the foot-pedal interface.
 \end{itemize}
+
+
+\subsubsection{Rider factors}
+
+Since the human-bicycle system is a closed-loop system where the rider is the controller and receives feedback from the bicycle, we briefly include this loop into the crash analysis.
+%
+The rider senses the status of the system through visual, vestibular, and proprioceptive feedback \cite{Moo12}.
+%
+Based on this, creates a control response, which has a force and occur in a time window, closely related to the source of sensing.
 
 \subsection{Location}
 
@@ -151,6 +175,9 @@ Finally, the classification of this crash would be \textbf{LE-TF-Step}, front sl
 \begin{thebibliography}{9}
 
     \bibitem{Jac04} Elin K. Jacob (2004):  Classification and Categorization: A Difference that makes a Difference. Graduate School of Library and Information Science. University of Illinois at Urbana-Champaign. \url{http://hdl.handle.net/2142/1686}
+
+    \bibitem{Moo12} Moore, Jason (2012): Human Control of a Bicycle. Doctoral thesis, University of California Davis.
+
 
 \end{thebibliography}
 
