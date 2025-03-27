@@ -2,6 +2,7 @@
 \usepackage{graphicx}
 \usepackage{geometry}
 \usepackage[hidelinks]{hyperref}
+\usepackage{rotating}
 % \usepackage{biblatex}
 
 \geometry{
@@ -24,12 +25,19 @@
 
 \maketitle
 
-\begin{figure}
+\begin{sidewaysfigure}
     \centering
-    \includegraphics[angle=90, height = \textheight]{class-mindmap-v3.png}
+    \includegraphics[width = \textwidth]{class-mindmap-v3.png}
     \caption{Flowchart of bicycle crash classification.}
     \label{fig: flowchart}
-\end{figure}
+\end{sidewaysfigure}
+
+% \begin{figure}
+    % \centering
+    % \includegraphics[angle=90, height = \textheight]{class-mindmap-v3.png}
+    % \caption{Flowchart of bicycle crash classification.}
+    % \label{fig: flowchart}
+% \end{figure}
 
 \begin{figure}[h]
     \centering
