@@ -62,7 +62,7 @@ A single-actor bicycle-crash is an event where the normal riding of the bicycle 
 
 \section{Bicycle dynamics-oriented classification}
 
-The proposed workflow to classify the crash according to the observed characteristics is composed by three sub-categories: motion, interaction and mechanism (see Figure \ref{fig: flowchart}).
+The proposed workflow to classify the crash according to the observed characteristics is composed by three layers: motion, excitation and mechanism (see Figure \ref{fig: flowchart}), and three sub-layers: rider factors, location and force characteristics.
 
 \subsection{Motion of the bicycle}
 
@@ -78,11 +78,11 @@ This is particularly challenging to represent in a normal drawing so the visual 
 
 \begin{itemize}
     \item \textbf{Pitch-over (P):} The main characteristic of this motion is one of the wheels lifting from the ground and following a trajectory that finishes with the front wheel behind the rear wheel.
-    \item \textbf{High-side (H):} Characterised for a sudden deceleration of the wheel while in lateral motion, which leads to a violent roll motion in the opposite direction of the initial motion.
-    \item \textbf{Low-side (L):} The human-bicycle system follows an excessive roll motion in the same direction as at the beginning.
+    \item \textbf{High-side (H):} Characterised for a sudden deceleration of the wheel while in lateral motion, which leads to a violent roll rate in the opposite direction of the initial motion.
+    \item \textbf{Low-side (L):} The human-bicycle system follows an excessive roll rate in the same direction as at the beginning.
 \end{itemize}
 
-\section{Excitation of the system}
+\subsection{Excitation of the system}
 
 For this research, the bicycle is assumed as an interface between the human and the environment.
 %
@@ -101,18 +101,18 @@ Additionally, the bicycle itself is a dynamic system which can present excitatio
 
 
 
-\section{Mechanism of crash}
+\subsection{Mechanism of crash}
 
 Here we detail mechanisms that made possible bicycle riding, however, in the analysis of crashes, we delve into the failure of these mechanisms.
 
-\subsection{External mechanisms}
+\subsubsection{External mechanisms}
 \begin{itemize}
     \item \textbf{Tyre forces (T):} Forces acting in the tyre-ground interface, principally grip and normal. The failure mechanism is the slide.
     \item \textbf{Aerodynamic forces (A):} Aerodynamic forces which are studied as a resultant in the centre of pressure of the system.
     \item \textbf{Body excerted forces (D):} All forces that interact with the human bicycle system as contact inputs, e.g. collisions.
 \end{itemize}
 
-\subsection{Internal mechanisms}
+\subsubsection{Internal mechanisms}
 
 \textbf{Degree of Freedom (DoF):} This makes reference to unintended motions that result from the excitation of natural modes of the system.
 %
@@ -120,7 +120,7 @@ The two most studied and dangerous modes when unstable are known as `weave' and 
 %
 It is important to clarify that these known modes come from the linear modeling of the bicycle.
 
-\subsection{Rider mechanisms}
+\subsubsection{Rider mechanisms}
 \begin{itemize}
     \item \textbf{Brake input (B):} To decrease the speed, the rider has control on the brakes, which input can be erroneous and go out of the boundaries of their capabilities of control, resulting in excessive load transfer.
     \item \textbf{Steering torque (S):} The main control input on the bicycle, this allows the rider to balance the bicycle as an inverted pendulum.
@@ -130,6 +130,8 @@ It is important to clarify that these known modes come from the linear modeling 
 \end{itemize}
 
 
+\subsection{Sub-layers of classification}
+
 \subsubsection{Rider factors}
 
 Since the human-bicycle system is a closed-loop system where the rider is the controller and receives feedback from the bicycle, we briefly include this loop into the crash analysis.
@@ -138,14 +140,13 @@ The rider senses the status of the system through visual, vestibular, and propri
 %
 Based on this, creates a control response, which has a force and occur in a time window, closely related to the source of sensing.
 
-\subsection{Location}
+\subsubsection{Location}
 
 We can identify the direction with respect to the reference frame of the bicycle where the force acts: longitudinal or lateral.
 %
 In line manner, it is possible to differenciate the region of the system where the main principal interaction occurs: front or rear.
 
-\section{Force characteristics}
-
+\subsection{Force characteristics}
 
 \begin{itemize}
     \item \textbf{Step:} A force that instantaneously changes from zero to a constant value and remains at that level indefinitely. It represents a sudden application of force.
@@ -178,7 +179,20 @@ Third, from tyre mechanics it is known that tyres have a saturation margin where
 In this case, this force relation can be assumed as an step force, where the available grip suddenly decreases and it is not recovered.
 
 
-Finally, the classification of this crash would be \textbf{LE-TF-Step}, front slide low side.
+Finally, the classification of this crash would be \textbf{L-Ext-TF-Step}, front slide low side.
+
+
+\section{Closing words}
+
+This classification aims to provide a wide coverage of bicycle crashes, taking into account factors, mechanisms and common motions.
+%
+However, it is still possible that with the available information, the event does not fit properly in the available options.
+%
+For this reason, this work allows to classify crashes with a combination of different layers.
+
+
+In the case of none of the available options seems to be descriptive enough for the case, it is expected to provide an answer of the recommended classification.
+
 
 \begin{thebibliography}{9}
 

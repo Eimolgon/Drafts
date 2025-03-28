@@ -13,7 +13,7 @@ def check_duplicate(samp: list) -> bool:
             return False
 
 n_videos = 100
-n_participants = 15
+n_participants = 20
 amount = 15
 
 # ----- ----- -----
@@ -29,11 +29,13 @@ participants = np.arange(1, n_participants+1)
 sorteo = {}
 
 for i in participants:
-    rand_list = random.sample(range(1, n_videos), amount)
+    rand_list = random.sample(range(1, n_videos+1), amount)
     if check_duplicate(rand_list):
         rand_list = random.sample(range(1, n_videos), amount)
     
+    rand_list.sort()
     sorteo[i] = rand_list
+
 
 file = open('forms/sorteo-result.txt', 'w')
 
