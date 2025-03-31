@@ -13,7 +13,7 @@ def check_duplicate(samp: list) -> bool:
             return False
 
 n_videos = 100
-n_participants = 20
+n_participants = 30
 amount = 15
 
 # ----- ----- -----
