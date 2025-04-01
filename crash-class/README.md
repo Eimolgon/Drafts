@@ -5,8 +5,11 @@ How to classify crashes:
 
 ## Types of crashes:
 
-1. Pitch-over (P): The sum of forces on the longitudinal direction results in abrupt deceleration, with excessive load transfer that initiates a flip motion with rotation centre on the front wheel.
-2. Roll-over: As indicated in the name, mainly related to the roll degree of freedom of the vehicle, it can be sub-divided in two:
+1. Pitch-over (P): The sum of forces on the longitudinal direction results in
+abrupt deceleration, with excessive load transfer that initiates a flip motion
+with rotation centre on the front wheel.
+2. Roll-over: As indicated in the name, mainly related to the roll degree of
+freedom of the vehicle, it can be sub-divided in two:
     a. Low-side (L): The uncontrolled roll angle increases in the same direction of the intended turning.
     b. High-side (H): The uncontrolled roll angle increases in the opposite direction of the intented turning, as a result of an abrupt change in the tyre-ground surface interaction forces.
 
@@ -52,5 +55,13 @@ classification.
 
 The instructions to identfy each type are attached in the .pdf file.
 You will also receive a .txt file where you can store your answers.
+In the case that you feel that one of the videos does not fit into the available
+“boxes”, you can describe it with your own terms.
+If you think that the crash is a combination of two or more factors in a box,
+please specify them.
 
+Thanks for your contribution!
+
+Kind regards,
+Benjamin
 
