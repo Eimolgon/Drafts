@@ -70,7 +70,7 @@ This document aims to guide you to understand the proposed classification \cite{
 
 A single-actor bicycle-crash is an event where the normal riding of the bicycle is disrupted and ends in a crash with no other road users involved.
 %
-Essentially, in this document will be assumed that a crash occurs when during a manoeuvre one or more excitations modify the state of the system in an unexpected way.
+Essentially, in this document will be assumed that a crash occurs when, during a manoeuvre one or more excitations modify the state of the system in an unexpected way.
 %
 This excitation is the beginning of the `critical scenario', where we find the mechanisms that produce the crash.
 %
@@ -88,76 +88,37 @@ Due to the dynamics of the bicycle, and following the common simplification to i
 %
 Additionally, the roll-over motion includes its own sub-classification according to the direction of rotation with respect to the initial motion.
 % 
-Please visit \url{https://youtube.com/shorts/_etyqSpH10c?feature=shared} to watch an example of a crash where the final rotation is in the opposite direction of the initial motion.
+Please visit \url{https://youtube.com/shorts/_etyqSpH10c?feature=shared} to watch an example of a crash where the roll angle is negative with respect to the intended turn.
 %
 This is particularly challenging to represent in a normal drawing so the visual explanation is on the make.
 
 \begin{itemize}
-    \item \textbf{Pitch-over (P):} The main characteristic of this motion is one of the wheels lifting from the ground and following a trajectory that finishes with the front wheel behind the rear wheel.
-    \item \textbf{High-side (H):} Characterised for a sudden deceleration of the wheel while in lateral motion, which leads to a violent roll rate in the opposite direction of the initial motion.
+    \item \textbf{Pitch-over (P):} The main characteristic of this motion is one of the wheels lifting from the ground, following a trajectory that finishes with the front wheel behind the rear wheel.
+    \item \textbf{High-side (H):} Characterised for a sudden deceleration of the wheel while in lateral motion, which leads to a violent negative roll rate with respect to the direction of the initial motion.
     \item \textbf{Low-side (L):} The human-bicycle system follows an excessive roll rate in the same direction as at the beginning.
 \end{itemize}
 
+Please note that in Pitch-over and High-side motions, the rider is abruptly ejected from the bicycle.
 
 
-\subsection{Mechanism of crash}
+\subsection{Mechanisms of crash}
 
-Here we detail mechanisms that made possible bicycle riding, however, in the analysis of crashes, we delve into the failure of these mechanisms.
+Here we detail mechanisms that make possible bicycle riding, however, in the analysis of crashes, we delve into the failure of these mechanisms.
 
-\subsubsection{External mechanisms}
 \begin{itemize}
-    \item \textbf{Tyre forces (T):} Forces acting in the tyre-ground interface, principally grip and normal. The failure mechanism is the slide.
-    \item \textbf{Aerodynamic forces (A):} Aerodynamic forces which are studied as a resultant in the centre of pressure of the system.
-    \item \textbf{Body excerted forces (D):} All forces that interact with the human bicycle system as contact inputs, e.g. collisions.
-    \item \textbf{Load transfer:} To decrease the speed, the rider has control on the brakes, which input can be erroneous and go out of the boundaries of their capabilities of control, resulting in excessive load transfer.
-    \item \textbf{Steering torque (S):} The main control input on the bicycle, this allows the rider to balance the bicycle as an inverted pendulum.
-    \item \textbf{Power input (W):} Pedal force applird from the rider, this creates the forward motion of the bicycle.
+    \item \textbf{Modes of vibration:} Bicycles are studied as dynamical systems composed, among others, by rear and front frame connected by a rotating joint that creates the steering.
         %
-        The failure mechanism is excessive load transfer or sudden disengagement of the foot-pedal interface.
-\end{itemize}
-
-\subsubsection{Internal mechanisms}
-
-\textbf{Degree of Freedom (DoF):} This makes reference to unintended motions that result from the excitation of natural modes of the system.
-%
-The two most studied and dangerous modes when unstable are known as `weave' and `wobble', being the former related to roll and yaw, while the latter mainly related to steering.
-%
-It is important to clarify that these known modes come from the linear modeling of the bicycle.
-
-\subsubsection{Rider mechanisms}
-\begin{itemize}
-    \item \textbf{Brake input (B):} To decrease the speed, the rider has control on the brakes, which input can be erroneous and go out of the boundaries of their capabilities of control, resulting in excessive load transfer.
-    \item \textbf{Steering torque (S):} The main control input on the bicycle, this allows the rider to balance the bicycle as an inverted pendulum.
-    \item \textbf{Power input (W):} Pedal force applird from the rider, this creates the forward motion of the bicycle.
+        When these models are linearised, stability analyses show two particularly dangerous oscillatory modes of vibration when unstable: weave and wobble.
         %
-        The failure mechanism is excessive load transfer or sudden disengagement of the foot-pedal interface.
+        Being the former a combination of roll and yaw angle, while the latter a high-frequency steering oscillation.
+    \item \textbf{Load transfer:} This refers to the longitudinal load transfer as a result of longitudinal accelerations.
+    \item \textbf{Balance control:} This refers to the lateral control of the bicycle through the steering input.
+    \item \textbf{Tyre friction:} Forces acting in the tyre-ground interface, principally grip and normal.
+    \item \textbf{Aerodynamic forces:} Aerodynamic forces which are studied as a resultant in the centre of pressure of the system.
+    \item \textbf{Contact forces:} All forces that interact with the human bicycle system as contact inputs (e.g. collisions).
+    \item \textbf{Rider-bicycle joint:} Events where the rider is unexpectedly disengaged from the bicycle, loosing the connection to the control interfaces.
 \end{itemize}
 
-
-\subsection{Sub-layers of classification}
-
-\subsubsection{Rider factors}
-
-Since the human-bicycle system is a closed-loop system where the rider is the controller and receives feedback from the bicycle, we briefly include this loop into the crash analysis.
-%
-The rider senses the status of the system through visual, vestibular, and proprioceptive feedback \cite{Moo12}.
-%
-Based on this, creates a control response, which has a force and occur in a time window, closely related to the source of sensing.
-
-\subsubsection{Location}
-
-We can identify the direction with respect to the reference frame of the bicycle where the force acts: longitudinal or lateral.
-%
-In line manner, it is possible to differenciate the region of the system where the main principal interaction occurs: front or rear.
-
-\subsection{Force characteristics}
-
-\begin{itemize}
-    \item \textbf{Step:} A force that instantaneously changes from zero to a constant value and remains at that level indefinitely. It represents a sudden application of force.
-    \item \textbf{Ramp:} A force that increases linearly with time, modeling a steadily growing input to a system.
-    \item \textbf{Impulse:} A high-magnitude force applied over a very short duration.
-    \item \textbf{Periodic:} A force that repeats at regular time intervals, such as sinusoidal.
-\end{itemize}
 
 \subsection{Excitation of the system}
 
@@ -165,7 +126,7 @@ For this research, the bicycle is assumed as an interface between the human and 
 %
 Therefore, the bicycle is subjected to forces from the environment and from human control.
 %
-Additionally, the bicycle itself is a dynamic system which can present excitations in its motion, which are referred as internal excitations.
+Additionally, the bicycle itself is a dynamic system which can present excitations in its motion, which are referred as intrinsic excitations.
 
 
 \begin{itemize}
@@ -176,14 +137,22 @@ Additionally, the bicycle itself is a dynamic system which can present excitatio
     \item \textbf{Rider forces (Rid):} This makes reference to the control inputs from the human to the vehicle.
 \end{itemize}
 
+
 \section{Important notes}
 
+
+\subsection{Control interfaces}
+
 \begin{itemize}
-
-    \item \textbf{Contact forces:}
-    \item 
-
+    \item \textbf{Handlebar:} Through the handlebar the rider excerts steering torque to control the lateral balance of the bicycle.
+    \item \textbf{Pedals:} In the pedals, the rider applies force to create the propulsion of the bicycle.
+        %
+        This interface is subjected to large forces when the system is in longitudinal acceleration.
+    \item \textbf{Brakes:} To reduce the longitudinal speed of the system, the rider controls the brakes through handles.
+        %
+        If the control input is not correct, the system experiences excessive braking force, over its load transfer limits.
 \end{itemize}
+
 
 
 \section{Example}
@@ -197,19 +166,15 @@ Additionally, it is in the same direction of the beginning of the motion.
 Therefore, this corresponds to the category low-side (L).
 
 
-Second, there are no visible wrong rider control inputs, which leads to a external force mechanism (E).
+Second, from visual inspection, it is possible to conclude that the saturation limit of tyre grip was reached, causing a loss of grip during the turn.
+
+
+Third, there are no visible wrong rider control inputs, which leads to a external force mechanism.
 %
 Additionally, it is not possible to determine if aerodynamics played a major role and there is no visible external body perturbation.
-%
-For this reason, we conclude that the fail mechanism occurs at the tyre-ground interface (T), being reasonable to assume that the event started in the front wheel (F).
 
 
-Third, from tyre mechanics it is known that tyres have a saturation margin where available grip reaches a limit.
-%
-In this case, this force relation can be assumed as an step force, where the available grip suddenly decreases and it is not recovered.
-
-
-Finally, the classification of this crash would be \textbf{L-Ext-TF-Step}, front slide low side.
+Finally, the classification of this crash would be \textbf{L-Tyre-Ext}, front slide low side.
 
 
 \section{Closing words}
@@ -220,8 +185,6 @@ However, it is still possible that with the available information, the event doe
 %
 For this reason, this work allows to classify crashes with a combination of different layers.
 
-
-In the case of none of the available options seems to be descriptive enough for the case, it is expected to provide an answer of the recommended classification.
 
 
 \begin{thebibliography}{9}
