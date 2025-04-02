@@ -25,19 +25,19 @@
 
 \maketitle
 
-\begin{sidewaysfigure}
-    \centering
-    \includegraphics[width = \textwidth]{class-mindmap-v3.png}
-    \caption{Flowchart of bicycle crash classification.}
-    \label{fig: flowchart}
-\end{sidewaysfigure}
+%\begin{sidewaysfigure}
+%    \centering
+%    \includegraphics[width = \textwidth]{class-mindmap-v3.png}
+%    \caption{Flowchart of bicycle crash classification.}
+%    \label{fig: flowchart}
+%\end{sidewaysfigure}
 
-% \begin{figure}
-    % \centering
-    % \includegraphics[angle=90, height = \textheight]{class-mindmap-v3.png}
-    % \caption{Flowchart of bicycle crash classification.}
-    % \label{fig: flowchart}
-% \end{figure}
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale=1.0]{bike-dof.png}
+    \caption{Rotation axes of the bicycle.}
+    \label{fig: bike-dof}
+\end{figure}
 
 \begin{figure}[h]
     \centering
@@ -54,12 +54,6 @@
 \end{figure}
 
 
-\begin{figure}[h]
-    \centering
-    \includegraphics[scale=1.0]{bike-dof.png}
-    \caption{Rotation axes of the bicycle.}
-    \label{fig: bike-dof}
-\end{figure}
 
 
 \section{Introduction}
@@ -78,7 +72,7 @@ Finally, the crash itself can be characterised by the motion of the bicycle and/
 
 \section{Bicycle dynamics-oriented classification}
 
-The proposed workflow to classify the crash according to the observed characteristics is composed by three layers: motion, mechanism and excitation (see Figure \ref{fig: flowchart}).
+The proposed workflow to classify the crash according to the observed characteristics is composed by three layers: motion, mechanism and excitation.% (see Figure \ref{fig: flowchart}).
 
 \subsection{Motion of the bicycle}
 
@@ -144,7 +138,7 @@ Additionally, the bicycle itself is a dynamic system which can present excitatio
 \subsection{Control interfaces}
 
 \begin{itemize}
-    \item \textbf{Handlebar:} Through the handlebar the rider excerts steering torque to control the lateral balance of the bicycle.
+    \item \textbf{Handlebar:} Through the handlebar the rider exerts steering torque to control the lateral balance of the bicycle.
     \item \textbf{Pedals:} In the pedals, the rider applies force to create the propulsion of the bicycle.
         %
         This interface is subjected to large forces when the system is in longitudinal acceleration.
@@ -171,10 +165,10 @@ Second, from visual inspection, it is possible to conclude that the saturation l
 
 Third, there are no visible wrong rider control inputs, which leads to a external force mechanism.
 %
-Additionally, it is not possible to determine if aerodynamics played a major role and there is no visible external body perturbation.
+Additionally, it is not possible to determine if aerodynamics played a major role and there is no other visible external body perturbation.
 
 
-Finally, the classification of this crash would be \textbf{L-Tyre-Ext}, front slide low side.
+Finally, the classification of this crash would be \textbf{L-Tyre-Ext},  slide low side.
 
 
 \section{Closing words}
