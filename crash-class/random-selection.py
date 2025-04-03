@@ -14,7 +14,7 @@ def check_duplicate(samp: list) -> bool:
 
 n_videos = 100
 n_participants = 30
-amount = 15
+amount = 10
 
 # ----- ----- -----
 # This is only for short tests
