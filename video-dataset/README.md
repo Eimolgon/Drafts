@@ -21,3 +21,9 @@ Clone the repository
 > cd
 
 
+To-Do
+-----
+
+- [ ] Join .py files into a single code for download and add videos
+- [ ] Make no-fall dataset for annotation and training
+- [ ] Make edge cases dataset (stunt, near miss, etc.)
