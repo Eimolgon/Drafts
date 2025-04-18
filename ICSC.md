@@ -1,4 +1,4 @@
-#### Bicycle crash clustering using ellipses in computer vision
+#### Bicycle crash analysis using instance segmentation
 
 ##### Introduction
 
@@ -6,7 +6,7 @@ Bicycle usage carries several benefits, from less traffic congestion in cities,
 less polution, healthier lifestyle, among others.
 
 However, cyclist are vulnerable road users, which crash rate is in increase
-\cite{Eco24}.
+<cite>[Eco24][1]</cite>.
 
 For this reason, research in the field of bicycle crashes during the 15 last
 years have gained popularity.
@@ -15,15 +15,6 @@ Within the types of bicycle crahes, one that stands out is the Single-actor
 bicycle crash, where no other road user is involved.
 
 
-
-
-Up to this date, the information concerning this type of events is limited.
-
-Most studies focus on statistics in a city infrastructure-based approach or
-human injuries.
-
-However, none of these approaches take into account the particular behaviour of
-bicycles.
 
 Understanding the behaviour of bicycle in crash scenarios will enhance research
 quality in the field and increase road safety.
@@ -44,11 +35,6 @@ public domain sources \ref{}.
 
 
 
-
-Along with the manual inspection, we propose a new classification based on
-bicycle dynamics, which also includes human factors and highglights the gap on
-required data to understand bicycle crashes.
-
  
 
 ##### Method
@@ -58,20 +44,26 @@ Mention somewhere here that we are using instance segmentation.
 
 
 
-- Dataset creation
+- Data collection
 
-This research have been based on public domain bicycle crashes audiovisual
-content.
-
-We created a datased composed mainly of YouTube videos, with the posibility of
-expanding it in a user-friendly way.
-
-Using this dataset, several single-track vehicle dynamics experts were asked to
-classify the events according to the proposed approach.
-
+This research have been based on manually selected videos from public domain
+sources.
 
 
 - Video labelling
+
+In the training phase, videos were annotated using CVAT for instance segmentation
+in YOLO format.
+
+Using this approach, we label ellipses for the wheels using front and rear as
+the features.
+
+We extract the position of the center of the ellipse along with the axes and
+angle.
+
+
+
+
 
 To train the computer vision algorithm, several bicycle videos of normal riding
 and crash scenarios were labeled.
@@ -148,5 +140,6 @@ easy to identify.
 
 #### References
 
-European Commission (2024) Facts and Figures Cyclists. European Road Safety
+[1]: European Commission (2024) Facts and Figures Cyclists. European Road Safety
 Observatory. Brussels, European Commission, Directorate General for Transport.
+
