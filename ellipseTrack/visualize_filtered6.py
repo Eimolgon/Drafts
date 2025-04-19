@@ -182,11 +182,16 @@ def plot_data(tracking_data, filtered_data, show_raw=False, absolute_diff=True):
     # Plot X Position
     ax1 = plt.subplot(3, 2, 1)
     for class_id, data in tracking_data.items():
+        if class_id == 0:
+            class_name = 'Front wheel'
+        elif class_id == 1:
+            class_name = 'Rear wheel'
+
         if show_raw:
             ax1.plot(data['frames'], data['x_pos'], '-', color=ellipse_colors[class_id], 
-                    alpha=raw_alpha, label=f'Raw Ellipse {class_id} X')
+                    alpha=raw_alpha, label=f'Raw Ellipse {class_name} X')
         ax1.plot(filtered_data[class_id]['frames'], filtered_data[class_id]['x_pos'], '-', 
-                color=ellipse_colors[class_id], linewidth=2, label=f'Filtered Ellipse {class_id} X')
+                color=ellipse_colors[class_id], linewidth=2, label=f'Filtered Ellipse {class_name} X')
     ax1.set_title('X Position')
     ax1.set_ylabel('X position (pixels)')
     ax1.legend()
@@ -197,10 +202,10 @@ def plot_data(tracking_data, filtered_data, show_raw=False, absolute_diff=True):
     for class_id, data in tracking_data.items():
         if show_raw:
             ax2.plot(data['frames'], data['y_pos'], '-', color=ellipse_colors[class_id], 
-                    alpha=raw_alpha, label=f'Raw Ellipse {class_id} Y')
+                    alpha=raw_alpha, label=f'Raw Ellipse {class_name} Y')
         ax2.plot(filtered_data[class_id]['frames'], filtered_data[class_id]['y_pos'], '-', 
-                color=ellipse_colors[class_id], linewidth=2, label=f'Filtered Ellipse {class_id} Y')
-    ax2.set_title('Y Position (Inverted)')
+                color=ellipse_colors[class_id], linewidth=2, label=f'Filtered Ellipse {class_name} Y')
+    ax2.set_title('Y Position')
     ax2.set_ylabel('Y position (pixels)')
     ax2.invert_yaxis()
     ax2.grid(True)
@@ -210,9 +215,9 @@ def plot_data(tracking_data, filtered_data, show_raw=False, absolute_diff=True):
     for class_id, data in tracking_data.items():
         if show_raw:
             ax3.plot(data['frames'], data['major_axes'], '-', color=ellipse_colors[class_id], 
-                    alpha=raw_alpha, label=f'Raw Ellipse {class_id}')
+                    alpha=raw_alpha, label=f'Raw Ellipse {class_name}')
         ax3.plot(filtered_data[class_id]['frames'], filtered_data[class_id]['major_axes'], '-', 
-                color=ellipse_colors[class_id], linewidth=2, label=f'Filtered Ellipse {class_id}')
+                color=ellipse_colors[class_id], linewidth=2, label=f'Filtered Ellipse {class_name}')
     ax3.set_title('Major Axis')
     ax3.set_ylabel('Major axis (pixels)')
     ax3.grid(True)
@@ -222,9 +227,9 @@ def plot_data(tracking_data, filtered_data, show_raw=False, absolute_diff=True):
     for class_id, data in tracking_data.items():
         if show_raw:
             ax4.plot(data['frames'], data['angles'], '-', color=ellipse_colors[class_id], 
-                    alpha=raw_alpha, label=f'Raw Ellipse {class_id}')
+                    alpha=raw_alpha, label=f'Raw Ellipse {class_name}')
         ax4.plot(filtered_data[class_id]['frames'], filtered_data[class_id]['angles'], '-', 
-                color=ellipse_colors[class_id], linewidth=2, label=f'Filtered Ellipse {class_id}')
+                color=ellipse_colors[class_id], linewidth=2, label=f'Filtered Ellipse {class_name}')
     ax4.set_title('Angle')
     ax4.set_ylabel('Angle (degrees)')
     ax4.grid(True)
