@@ -1,5 +1,5 @@
 names:
-  0: Front Wheel
-  1: Rear Wheel
+  0: Front wheel
+  1: Rear wheel
 path: .
 train: train.txt

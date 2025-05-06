@@ -150,11 +150,16 @@ def plot_data(tracking_data, filtered_data, show_raw=False, absolute_diff=True):
     # Plot X Position
     ax1 = plt.subplot(2, 3, 1)
     for class_id, data in tracking_data.items():
+        if class_id == 0:
+            class_name = 'Front'
+        elif class_id == 1:
+            class_name = 'Rear'
+
         if show_raw:
             ax1.plot(data['frames'], data['x_pos'], '-', color=ellipse_colors[class_id], 
-                    alpha=raw_alpha, label=f'Raw Ellipse {class_id} X')
+                    alpha=raw_alpha, label=f'{class_name} wheel raw')
         ax1.plot(filtered_data[class_id]['frames'], filtered_data[class_id]['x_pos'], '-', 
-                color=ellipse_colors[class_id], linewidth=2, label=f'Filtered Ellipse {class_id} X')
+                color=ellipse_colors[class_id], linewidth=2, label=f'{class_name} wheel filtered')
     ax1.set_title('X Position')
     ax1.set_ylabel('X position (pixels)')
     ax1.legend()
@@ -165,9 +170,9 @@ def plot_data(tracking_data, filtered_data, show_raw=False, absolute_diff=True):
     for class_id, data in tracking_data.items():
         if show_raw:
             ax2.plot(data['frames'], data['y_pos'], '-', color=ellipse_colors[class_id], 
-                    alpha=raw_alpha, label=f'Raw Ellipse {class_id} Y')
+                    alpha=raw_alpha, label=f'{class_name} wheel Y raw')
         ax2.plot(filtered_data[class_id]['frames'], filtered_data[class_id]['y_pos'], '-', 
-                color=ellipse_colors[class_id], linewidth=2, label=f'Filtered Ellipse {class_id} Y')
+                color=ellipse_colors[class_id], linewidth=2, label=f'{class_name} wheel Y filtered')
     ax2.set_title('Y Position')
     ax2.set_ylabel('Y position (pixels)')
     ax2.invert_yaxis()
@@ -176,15 +181,21 @@ def plot_data(tracking_data, filtered_data, show_raw=False, absolute_diff=True):
     # Plot Major/Minor Axis Ratio
     ax3 = plt.subplot(2, 3, 3)
     for class_id, data in tracking_data.items():
+
+        if class_id == 0:
+            class_name = 'Front'
+        elif class_id == 1:
+            class_name = 'Rear'
+
         # Calculate ratio
         if show_raw:
             ratio_raw = np.array(data['major_axes']) / np.array(data['minor_axes'])
             ax3.plot(data['frames'], ratio_raw, '-', color=ellipse_colors[class_id], 
-                    alpha=raw_alpha, label=f'Raw Ellipse {class_id} Ratio')
+                    alpha=raw_alpha, label=f'{class_name} wheel ellipse ratio')
         
         ratio_filtered = np.array(filtered_data[class_id]['major_axes']) / np.array(filtered_data[class_id]['minor_axes'])
         ax3.plot(filtered_data[class_id]['frames'], ratio_filtered, '-', 
-                color=ellipse_colors[class_id], linewidth=2, label=f'Filtered Ellipse {class_id} Ratio')
+                color=ellipse_colors[class_id], linewidth=2, label=f'{class_name} wheel ellipse ratio')
     ax3.set_title('Major/Minor Axis Ratio')
     ax3.set_ylabel('Ratio (major/minor)')
     ax3.axhline(1.0, color='gray', linestyle='--', alpha=0.5)
@@ -196,9 +207,9 @@ def plot_data(tracking_data, filtered_data, show_raw=False, absolute_diff=True):
     for class_id, data in tracking_data.items():
         if show_raw:
             ax4.plot(data['frames'], data['angles'], '-', color=ellipse_colors[class_id], 
-                    alpha=raw_alpha, label=f'Raw Ellipse {class_id}')
+                    alpha=raw_alpha, label=f'{class_name} wheel')
         ax4.plot(filtered_data[class_id]['frames'], filtered_data[class_id]['angles'], '-', 
-                color=ellipse_colors[class_id], linewidth=2, label=f'Filtered Ellipse {class_id}')
+                color=ellipse_colors[class_id], linewidth=2, label=f'{class_name} wheel')
     ax4.set_title('Angle')
     ax4.set_xlabel('Frame number')
     ax4.set_ylabel('Angle (degrees)')
