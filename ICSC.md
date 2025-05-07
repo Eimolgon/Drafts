@@ -79,9 +79,8 @@ the reference frame and a schematic representation of the crash motion.
 Figure \ref{Crash1} shows the data from the presented crash frames. In the top
 row, we show the x and y positions of the wheels' centres with respect to the
 frame numbers, along with the ratio between the major and the minor axes of the
-ellipses. In the bottom left corner, we plot the angle with respect to the
-vertical axis of the ellipses. Then, we plot the distance between wheel centres
-in both axes.
+ellipses. In the bottom row, whe plot the distance between wheel centres in both
+axes, along with the angle with respect to the vertical axis of the ellipses.
 
 
 We observe that after frame 100, the rear wheel moves forward over the front

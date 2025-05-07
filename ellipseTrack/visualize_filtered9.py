@@ -203,7 +203,7 @@ def plot_data(tracking_data, filtered_data, show_raw=False, absolute_diff=True):
     ax3.grid(True)
     
     # Plot Angle
-    ax4 = plt.subplot(2, 3, 4)
+    ax4 = plt.subplot(2, 3, 6)
     for class_id, data in tracking_data.items():
         if show_raw:
             ax4.plot(data['frames'], data['angles'], '-', color=ellipse_colors[class_id], 
@@ -216,7 +216,7 @@ def plot_data(tracking_data, filtered_data, show_raw=False, absolute_diff=True):
     ax4.grid(True)
     
     # Plot X Differences (NEW separate plot)
-    ax5 = plt.subplot(2, 3, 5)
+    ax5 = plt.subplot(2, 3, 4)
     if diff_metrics:
         ax5.plot(diff_metrics['frames'], diff_metrics['x_difference'], '-', 
                 color=diff_colors[0], label='X Difference')
@@ -236,7 +236,7 @@ def plot_data(tracking_data, filtered_data, show_raw=False, absolute_diff=True):
         ax5.set_title('X Differences (Not Available)')
     
     # Plot Y Differences (NEW separate plot)
-    ax6 = plt.subplot(2, 3, 6)
+    ax6 = plt.subplot(2, 3, 5)
     if diff_metrics:
         ax6.plot(diff_metrics['frames'], diff_metrics['y_difference'], '-', 
                 color=diff_colors[1], label='Y Difference')
