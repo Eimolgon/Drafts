@@ -6,36 +6,35 @@ Introduction
 
 Bicycle usage carries several benefits, from less traffic congestion in cities,
 less pollution, to healthier lifestyles. However, cyclists are vulnerable road
-users, and crash rates are increasing <cite>[European Commission 2024][1]</cite>.
-For this reason, research in the field of bicycle crashes during the last 15
-years has gained popularity. Within the types of bicycle crashes, one that
-stands out is the single-cyclist crash, where no other road user is involved,
-and its share ranges from 50% to 85% of bicycle-related hospital admissions
-<cite>[Utriainen et al. 2023][3]</cite>.
+users, and crash rates are increasing (European Commission 2024). For this
+reason, research in the field of bicycle crashes during the last 15 years has
+gained popularity. Within the types of bicycle crashes, one that stands out is
+the single-cyclist crash, where no other road user is involved, and its share
+ranges from 50% to 85% of bicycle-related hospital admissions
+(Utriainen et al. 2023).
 
 
 For instance, a common crash configuration is known as 'pitch-over'. This occurs
 when, due to excessive longitudinal load transfer, the rear wheel lifts from the
 ground and the bicycle rotates around the contact point of the front wheel.
-<cite>[Gildea et al. 2021][5]</cite>.
+(Gildea et al. 2021).
 
 
 The lack of data on these events is commonly discussed in the literature
-<cite>[Utriainen 2020][2]</cite>. However, no solutions have been provided,
+(Utriainen 2020). However, no solutions have been provided,
 and recreating crashes leads to dangerous situations even in
 laboratory-controlled setups. For this reason, we propose to use video instance
 segmentation to gather bicycle motion data from monocular videos. Specifically,
 instance segmentation is the task of detecting an object and demarcating its
-shape simultaneously on the image <cite>[Hafiz, A.M., Bhat, G.M. 2020][4]</cite>. 
+shape simultaneously on the image (Hafiz, A.M., Bhat, G.M. 2020). 
 
 
 Although in the literature we find bicycle crash analysis using computer vision
-methods <cite>[Gildea et al. 2024][6]</cite>, the focus was on the rider fall
-outcome and not on the bicycle's particular dynamics. Therefore, the aim of this
-study is to gather bicycle crash motion data from monocular videos. To this end,
-we created a dataset of single-cyclist crashes from web sources. From these
-videos, we track the motion of the bicycle by identifying and tracking the
-position of the wheels.
+methods (Gildea et al. 2024), the focus was on the rider fall outcome and not on
+the bicycle's particular dynamics. Therefore, our aim was to gather bicycle
+crash motion data from monocular videos. To this end, we created a dataset of
+single-cyclist crashes from web sources. From these videos, we track the motion
+of the bicycle by identifying and tracking the position of the wheels.
 
 Methods
 -------
@@ -62,25 +61,15 @@ the centres of both ellipses.
 Results
 -------
 
-![Example of annotated frames. \label{Annotation}](ellipseTrack/Data/vid5-label-sequence.png)
+In Figure 1, three annotated video frames are shown along with the reference
+frame and a schematic representation of the crash motion.
 
 
-![Pitch-over crash data. \label{Crash1}](ellipseTrack/Data/vid5-lp-v6.png)
-
-
-
-[//]: # (If matplotlib use "layout='constrained")
-
-
-In Figure \ref{Annotation}, three annotated video frames are shown along with
-the reference frame and a schematic representation of the crash motion.
-
-
-Figure \ref{Crash1} shows the data from the presented crash frames. In the top
-row, we show the x and y positions of the wheels' centres with respect to the
-frame numbers, along with the ratio between the major and the minor axes of the
-ellipses. In the bottom row, whe plot the distance between wheel centres in both
-axes, along with the angle with respect to the vertical axis of the ellipses.
+Figure 2 shows the data from the presented crash frames. In the top row, we show
+the x and y positions of the wheels' centres with respect to the frame numbers,
+along with the ratio between the major and the minor axes of the ellipses. In
+the bottom row, we plot the distance between wheel centres in both axes, along
+with the angle with respect to the vertical axis of the ellipses.
 
 
 We observe that after frame 100, the rear wheel moves forward over the front
@@ -105,8 +94,7 @@ of the bicycle, such as pitch-over crashes.
 
 
 Some limitations of this approach are low video quality, undefined camera
-motion, and inconsistent frame rate. Additionally, this methodology neglects the
-rotation of the wheels.
+motion, and inconsistent frame rate.
 
 
 Summarising, the presented methodology allows to gathering useful data from
@@ -133,14 +121,14 @@ learning algorithms to the data to cluster the types of crashes.
 References
 ----------
 
-[1]: European Commission (2024) Facts and Figures Cyclists. European Road Safety Observatory. Brussels, European Commission, Directorate General for Transport.
+European Commission (2024) Facts and Figures Cyclists. European Road Safety Observatory. Brussels, European Commission, Directorate General for Transport.
 
-[2]: Utriainen, R. (2020). Characteristics of Commuters’ Single-Bicycle Crashes in Insurance Data. Safety, 6(1), 13.
+[Utriainen 2020]: Utriainen, R. (2020). Characteristics of Commuters’ Single-Bicycle Crashes in Insurance Data. Safety, 6(1), 13.
 
-[3]: Roni Utriainen, Steve O’Hern & Markus Pöllänen (2023) Review on single-bicycle crashes in the recent scientific literature, Transport Reviews, 43:2, 159-177.
+[Utriainen et al. 2023]: Roni Utriainen, Steve O’Hern & Markus Pöllänen (2023) Review on single-bicycle crashes in the recent scientific literature, Transport Reviews, 43:2, 159-177.
 
-[4]: Hafiz, A.M., Bhat, G.M. A survey on instance segmentation: state of the art. Int J Multimed Info Retr 9, 171–189 (2020).
+[Hafiz, A.M., Bhat, G.M. 2020]]: Hafiz, A.M., Bhat, G.M. A survey on instance segmentation: state of the art. Int J Multimed Info Retr 9, 171–189 (2020).
 
-[5]: Gildea, K., Hall, D., & Simms, C. (2021). Configurations of underreported cyclist-motorised vehicle and single cyclist collisions: Analysis of a self-reported survey. Accident Analysis &Amp; Prevention, 159, 106264.
+[Gildea et al. 2021]: Gildea, K., Hall, D., & Simms, C. (2021). Configurations of underreported cyclist-motorised vehicle and single cyclist collisions: Analysis of a self-reported survey. Accident Analysis &Amp; Prevention, 159, 106264.
 
-[6]: Gildea, K., Hall, D., Cherry, C. R., & Simms, C. (2024). Forward dynamics computational modelling of a cyclist fall with the inclusion of protective response using deep learning-based human pose estimation. Journal of Biomechanics, 163, 111959.
+[Gildea et al. 2024]: Gildea, K., Hall, D., Cherry, C. R., & Simms, C. (2024). Forward dynamics computational modelling of a cyclist fall with the inclusion of protective response using deep learning-based human pose estimation. Journal of Biomechanics, 163, 111959.

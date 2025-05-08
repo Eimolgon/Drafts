@@ -7,6 +7,12 @@ from collections import defaultdict
 from scipy.signal import butter, filtfilt
 import argparse
 
+plt.rcParams['figure.constrained_layout.use'] = True
+plt.rcParams.update({'font.size': 16})
+# plt.rcParams['font.family'] = 'Times New Roman'
+
+
+
 def butter_lowpass(cutoff, fs, order=5):
     """Design a Butterworth lowpass filter."""
     nyq = 0.5 * fs
@@ -140,8 +146,8 @@ def plot_data(tracking_data, filtered_data, show_raw=False, absolute_diff=True):
     plt.figure(figsize=(18, 12))  # Adjusted figure size
     
     # Define color scheme
-    ellipse_colors = ['blue', 'orange']
-    diff_colors = ['green', 'red']
+    ellipse_colors = ['turquoise', 'red']
+    diff_colors = ['green', 'orange']
     raw_alpha = 0.3 if show_raw else 0
     
     # Calculate differences
@@ -160,8 +166,8 @@ def plot_data(tracking_data, filtered_data, show_raw=False, absolute_diff=True):
                     alpha=raw_alpha, label=f'{class_name} wheel raw')
         ax1.plot(filtered_data[class_id]['frames'], filtered_data[class_id]['x_pos'], '-', 
                 color=ellipse_colors[class_id], linewidth=2, label=f'{class_name} wheel filtered')
-    ax1.set_title('X Position')
-    ax1.set_ylabel('X position (pixels)')
+    ax1.set_title('X Position', fontweight='bold')
+    ax1.set_ylabel('X position (pixels)')#, fontsize = 16)
     ax1.legend()
     ax1.grid(True)
     
@@ -173,7 +179,7 @@ def plot_data(tracking_data, filtered_data, show_raw=False, absolute_diff=True):
                     alpha=raw_alpha, label=f'{class_name} wheel Y raw')
         ax2.plot(filtered_data[class_id]['frames'], filtered_data[class_id]['y_pos'], '-', 
                 color=ellipse_colors[class_id], linewidth=2, label=f'{class_name} wheel Y filtered')
-    ax2.set_title('Y Position')
+    ax2.set_title('Y Position', fontweight='bold')
     ax2.set_ylabel('Y position (pixels)')
     ax2.invert_yaxis()
     ax2.grid(True)
@@ -196,7 +202,7 @@ def plot_data(tracking_data, filtered_data, show_raw=False, absolute_diff=True):
         ratio_filtered = np.array(filtered_data[class_id]['major_axes']) / np.array(filtered_data[class_id]['minor_axes'])
         ax3.plot(filtered_data[class_id]['frames'], ratio_filtered, '-', 
                 color=ellipse_colors[class_id], linewidth=2, label=f'{class_name} wheel ellipse ratio')
-    ax3.set_title('Major/Minor Axis Ratio')
+    ax3.set_title('Major/Minor Axis Ratio', fontweight='bold')
     ax3.set_ylabel('Ratio (major/minor)')
     ax3.axhline(1.0, color='gray', linestyle='--', alpha=0.5)
     ax3.legend()
@@ -210,7 +216,7 @@ def plot_data(tracking_data, filtered_data, show_raw=False, absolute_diff=True):
                     alpha=raw_alpha, label=f'{class_name} wheel')
         ax4.plot(filtered_data[class_id]['frames'], filtered_data[class_id]['angles'], '-', 
                 color=ellipse_colors[class_id], linewidth=2, label=f'{class_name} wheel')
-    ax4.set_title('Angle')
+    ax4.set_title('Angle', fontweight='bold')
     ax4.set_xlabel('Frame number')
     ax4.set_ylabel('Angle (degrees)')
     ax4.grid(True)
@@ -222,7 +228,7 @@ def plot_data(tracking_data, filtered_data, show_raw=False, absolute_diff=True):
                 color=diff_colors[0], label='X Difference')
         
         diff_type = 'Absolute' if absolute_diff else 'Signed'
-        ax5.set_title(f'{diff_type} X Differences')
+        ax5.set_title(f'{diff_type} X Differences', fontweight='bold')
         ax5.set_xlabel('Frame number')
         ax5.set_ylabel(f'{diff_type} X Difference (pixels)')
         ax5.legend()
@@ -242,7 +248,7 @@ def plot_data(tracking_data, filtered_data, show_raw=False, absolute_diff=True):
                 color=diff_colors[1], label='Y Difference')
         
         diff_type = 'Absolute' if absolute_diff else 'Signed'
-        ax6.set_title(f'{diff_type} Y Differences')
+        ax6.set_title(f'{diff_type} Y Differences', fontweight='bold')
         ax6.set_xlabel('Frame number')
         ax6.set_ylabel(f'{diff_type} Y Difference (pixels)')
         ax6.legend()
