@@ -61,11 +61,11 @@ the centres of both ellipses.
 Results
 -------
 
-In Figure 1, three annotated video frames are shown along with the reference
-frame and a schematic representation of the crash motion.
+Three annotated video frames are shown along with the coordinate system and a
+schematic representation of the crash motion, in Figure 1.
 
 
-Figure 2 shows the data from the presented crash frames. In the top row, we show
+Data from the presented crash frames is shown in Figure 2. In the top row, we show
 the x and y positions of the wheels' centres with respect to the frame numbers,
 along with the ratio between the major and the minor axes of the ellipses. In
 the bottom row, we plot the distance between wheel centres in both axes, along
@@ -82,10 +82,10 @@ motion, which is equivalent to 283% of the average distance.
 Discussion
 ----------
 
-Problems addressed in this research are the lack of real-world single-cyclist
-crash data and its analysis using computer vision techniques. Using instance
-segmentation, we were able to track the position of the wheels of the bicycle in
-the image and analyse its crash motion.
+In this research we addressed the problems of the lack of real-world
+single-cyclist crash data and its analysis using computer vision techniques.
+Using instance segmentation, we were able to track the position of the wheels of
+the bicycle in the image and analyse its crash motion.
 
 
 From preliminary results, we observe that sudden variations in the distance
@@ -108,7 +108,7 @@ methods to the gathered data.
 Conclusion
 ----------
 
-In this work, we have created a video dataset of single-cyclist crashes. Using
+In this work we created a video dataset of single-cyclist crashes. Using
 computer vision techniques, we extracted 2-dimensional motion data of the
 wheels in different crash scenarios. We conclude that side-recorded videos 
 provide greater quality data using this approach. Additionally, crash

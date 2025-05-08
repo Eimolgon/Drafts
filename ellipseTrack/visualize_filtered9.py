@@ -166,8 +166,8 @@ def plot_data(tracking_data, filtered_data, show_raw=False, absolute_diff=True):
                     alpha=raw_alpha, label=f'{class_name} wheel raw')
         ax1.plot(filtered_data[class_id]['frames'], filtered_data[class_id]['x_pos'], '-', 
                 color=ellipse_colors[class_id], linewidth=2, label=f'{class_name} wheel filtered')
-    ax1.set_title('X Position', fontweight='bold')
-    ax1.set_ylabel('X position (pixels)')#, fontsize = 16)
+    ax1.set_title('$x$ Position', fontweight='bold')
+    ax1.set_ylabel('$x$ position (pixels)')#, fontsize = 16)
     ax1.legend()
     ax1.grid(True)
     
@@ -178,9 +178,9 @@ def plot_data(tracking_data, filtered_data, show_raw=False, absolute_diff=True):
             ax2.plot(data['frames'], data['y_pos'], '-', color=ellipse_colors[class_id], 
                     alpha=raw_alpha, label=f'{class_name} wheel Y raw')
         ax2.plot(filtered_data[class_id]['frames'], filtered_data[class_id]['y_pos'], '-', 
-                color=ellipse_colors[class_id], linewidth=2, label=f'{class_name} wheel Y filtered')
-    ax2.set_title('Y Position', fontweight='bold')
-    ax2.set_ylabel('Y position (pixels)')
+                color=ellipse_colors[class_id], linewidth=2, label=f'{class_name} wheel filtered')
+    ax2.set_title('$y$ Position', fontweight='bold')
+    ax2.set_ylabel('$y$ position (pixels)')
     ax2.invert_yaxis()
     ax2.grid(True)
     
@@ -225,12 +225,12 @@ def plot_data(tracking_data, filtered_data, show_raw=False, absolute_diff=True):
     ax5 = plt.subplot(2, 3, 4)
     if diff_metrics:
         ax5.plot(diff_metrics['frames'], diff_metrics['x_difference'], '-', 
-                color=diff_colors[0], label='X Difference')
+                color=diff_colors[0], label='$x$ Difference')
         
         diff_type = 'Absolute' if absolute_diff else 'Signed'
-        ax5.set_title(f'{diff_type} X Differences', fontweight='bold')
+        ax5.set_title(f'$x$ Distance', fontweight='bold')
         ax5.set_xlabel('Frame number')
-        ax5.set_ylabel(f'{diff_type} X Difference (pixels)')
+        ax5.set_ylabel(f'$x$ Distance (pixels)')
         ax5.legend()
         ax5.grid(True)
         
@@ -248,9 +248,9 @@ def plot_data(tracking_data, filtered_data, show_raw=False, absolute_diff=True):
                 color=diff_colors[1], label='Y Difference')
         
         diff_type = 'Absolute' if absolute_diff else 'Signed'
-        ax6.set_title(f'{diff_type} Y Differences', fontweight='bold')
+        ax6.set_title(f'$y$ Distance', fontweight='bold')
         ax6.set_xlabel('Frame number')
-        ax6.set_ylabel(f'{diff_type} Y Difference (pixels)')
+        ax6.set_ylabel(f'$y$ Distance (pixels)')
         ax6.legend()
         ax6.grid(True)
         
