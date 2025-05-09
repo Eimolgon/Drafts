@@ -123,12 +123,12 @@ References
 
 European Commission (2024) Facts and Figures Cyclists. European Road Safety Observatory. Brussels, European Commission, Directorate General for Transport.
 
-[Utriainen 2020]: Utriainen, R. (2020). Characteristics of Commuters’ Single-Bicycle Crashes in Insurance Data. Safety, 6(1), 13.
+Gildea, K., Hall, D., & Simms, C. (2021). Configurations of underreported cyclist-motorised vehicle and single cyclist collisions: Analysis of a self-reported survey. Accident Analysis & Prevention, 159, 106264.
 
-[Utriainen et al. 2023]: Roni Utriainen, Steve O’Hern & Markus Pöllänen (2023) Review on single-bicycle crashes in the recent scientific literature, Transport Reviews, 43:2, 159-177.
+Gildea, K., Hall, D., Cherry, C. R., & Simms, C. (2024). Forward dynamics computational modelling of a cyclist fall with the inclusion of protective response using deep learning-based human pose estimation. Journal of Biomechanics, 163, 111959.
 
-[Hafiz, A.M., Bhat, G.M. 2020]]: Hafiz, A.M., Bhat, G.M. A survey on instance segmentation: state of the art. Int J Multimed Info Retr 9, 171–189 (2020).
+Hafiz, A.M., Bhat, G.M. (2020) A survey on instance segmentation: state of the art. Int J Multimed Info Retr 9, 171–189.
 
-[Gildea et al. 2021]: Gildea, K., Hall, D., & Simms, C. (2021). Configurations of underreported cyclist-motorised vehicle and single cyclist collisions: Analysis of a self-reported survey. Accident Analysis &Amp; Prevention, 159, 106264.
+Utriainen, R. (2020). Characteristics of Commuters’ Single-Bicycle Crashes in Insurance Data. Safety 2020, 6(1), 13.
 
-[Gildea et al. 2024]: Gildea, K., Hall, D., Cherry, C. R., & Simms, C. (2024). Forward dynamics computational modelling of a cyclist fall with the inclusion of protective response using deep learning-based human pose estimation. Journal of Biomechanics, 163, 111959.
+Utriainen, R., O’Hern, S., & Pöllänen, M. (2023) Review on single-bicycle crashes in the recent scientific literature, Transport Reviews, 43:2, 159-177.
