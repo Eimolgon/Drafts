@@ -14,7 +14,7 @@
 
 % \bibliography{references}
 
-\title{Single-actor bicycle crash classification guide}
+\title{Single-cyclist crash classification guide}
 \author{
   Benjam\'in Gonz\'alez\\
   \small{\href{mailto:b.gonzaleztoledo@tudelft.nl}{B.GonzalezToledo@tudelft.nl}}
@@ -53,65 +53,55 @@
     \label{fig: rollover}
 \end{figure}
 
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=\linewidth]{high-side-draw.jpg}
+    \caption{Hand draw of a high-side crash.}
+    \label{fig: highside}
+\end{figure}
+
 
 
 
 \section{Introduction}
 
-This document aims to guide you to understand the proposed classification \cite{Jac04} of single-actor bicycle-crashes and label the samples sent to you.
+This document aims to guide you to understand the proposed classification of single-cyclist crashes and label the samples sent to you.
 
-\subsection{What is a Single-actor bicycle crash?}
+\subsection{What is a single-cyclist crash?}
 
-A single-actor bicycle-crash is an event where the normal riding of the bicycle is disrupted and ends in a crash with no other road users involved.
+A single-cyclist crash is an event where the normal riding of the bicycle is disrupted and ends in a crash with no other road users involved.
 %
-Essentially, in this document will be assumed that a crash occurs when, during a manoeuvre one or more excitations modify the state of the system in an unexpected way.
+Essentially, in this document will be assumed that a crash occurs when, during a manoeuvre, one or more excitations modify the state of the system in an unexpected way.
 %
 This excitation is the beginning of the `critical scenario', where we find the mechanisms that produce the crash.
 %
 Finally, the crash itself can be characterised by the motion of the bicycle and/or the rider in the outcome of the event.
 
+
+
 \section{Bicycle dynamics-oriented classification}
 
-The proposed workflow to classify the crash according to the observed characteristics is composed by three layers: motion, mechanism and excitation.% (see Figure \ref{fig: flowchart}).
-
-\subsection{Motion of the bicycle}
-
-This is related to the main motion of the rear frame of the bicycle while the crash is occuring.
+The proposed workflow to classify the crash according to the observed characteristics is composed by four layers: manoeuvre, excitation of the system, mechanisms, and motion.
 %
-Due to the dynamics of the bicycle, and following the common simplification to its analysis, we find two main motions related to the degrees of freedom: pitch-over and roll-over.
+This multi-layer approach allows to classify the crash events with different depth levels according to the available information.
 %
-Additionally, the roll-over motion includes its own sub-classification according to the direction of rotation with respect to the initial motion.
-% 
-Please visit \url{https://youtube.com/shorts/_etyqSpH10c?feature=shared} to watch an example of a crash where the roll angle is negative with respect to the intended turn.
+
+
+\subsection{Manoeuvre}
+
+The first layer consists on the manoeuvre that the rider is executing at the moment of entering to the critical scenario.
 %
-This is particularly challenging to represent in a normal drawing so the visual explanation is on the make.
-
-\begin{itemize}
-    \item \textbf{Pitch-over (P):} The main characteristic of this motion is one of the wheels lifting from the ground, following a trajectory that finishes with the front wheel behind the rear wheel.
-    \item \textbf{High-side (H):} Characterised for a sudden deceleration of the wheel while in lateral motion, which leads to a violent negative roll rate with respect to the direction of the initial motion.
-    \item \textbf{Low-side (L):} The human-bicycle system follows an excessive roll rate in the same direction as at the beginning.
-\end{itemize}
-
-Please note that in Pitch-over and High-side motions, the rider is abruptly ejected from the bicycle.
-
-
-\subsection{Mechanisms of crash}
-
-Here we detail mechanisms that make possible bicycle riding, however, in the analysis of crashes, we delve into the failure of these mechanisms.
-
-\begin{itemize}
-    \item \textbf{Modes of vibration:} Bicycles are studied as dynamical systems composed, among others, by rear and front frame connected by a rotating joint that creates the steering.
-        %
-        When these models are linearised, stability analyses show two particularly dangerous oscillatory modes of vibration when unstable: weave and wobble.
-        %
-        Being the former a combination of roll and yaw angle, while the latter a high-frequency steering oscillation.
-    \item \textbf{Load transfer:} This refers to the longitudinal load transfer as a result of longitudinal accelerations.
-    \item \textbf{Balance control:} This refers to the lateral control of the bicycle through the steering input.
-    \item \textbf{Tyre friction:} Forces acting in the tyre-ground interface, principally grip and normal.
-    \item \textbf{Aerodynamic forces:} Aerodynamic forces which are studied as a resultant in the centre of pressure of the system.
-    \item \textbf{Contact forces:} All forces that interact with the human bicycle system as contact inputs (e.g. collisions).
-    \item \textbf{Rider-bicycle joint:} Events where the rider is unexpectedly disengaged from the bicycle, loosing the connection to the control interfaces.
-\end{itemize}
+Here, we understand straight-running as the action of riding a straight path, maintaining balance through minor steering adjustments and no major variations on the states of the system.
+%
+Longitudinal acceleration manoeuvres refer to braking and acceleration, both performed by the user.
+%
+Steady and planned cornering refers to the situation where the rider is performing a controlled turning with a defined trajectory.
+%
+Low speed makes reference mainly to start and stop riding, where users require major steerign control inputs to maintain the bicycle in upright position.
+%
+Unplanned turning or avoidance manoeuvre is when the rider executes a sudden evasive turn or abrupt brake application to avoid an obstacle.
+%
+Stunting refers to any action that is not explicitly required for normal riding, such as riding with one hand, no hands, or standing on the pedals, which limits the control of the rider on the bicycle.
 
 
 \subsection{Excitation of the system}
@@ -128,12 +118,37 @@ Additionally, the bicycle itself is a dynamic system which can present excitatio
     \item \textbf{Intrisic excitations (Int):} Behaviour of the system due to its dynamical properties.
         %
         Its associated crash scenario is the excitation of a natural frequency of the system, creating an unstable and/or uncontrollable vehicle.
+        %
+        Possible mechanical failures on the bicycle also fit in this category.
     \item \textbf{Rider forces (Rid):} This makes reference to the control inputs from the human to the vehicle.
 \end{itemize}
 
 
-\section{Important notes}
 
+\subsection{Mechanisms of crash}
+
+Here we detail mechanisms that make possible bicycle riding, however, in the analysis of crashes, we delve into the failure of these mechanisms.
+
+\begin{itemize}
+    \item \textbf{Modes of vibration:} Bicycles are studied as dynamical systems composed, among others, by rear and front frame connected by a rotating joint that creates the steering.
+        %
+        When these models are linearised, stability analyses show two particularly dangerous oscillatory modes of vibration when unstable: weave and wobble.
+        %
+        Being the former a combination of roll and yaw angle, while the latter a high-frequency steering oscillation.
+    \item \textbf{Rider-bicycle joint:} Events where the rider is unexpectedly disengaged from the bicycle, loosing the connection to the control interfaces.
+    \item \textbf{Balance control:} This refers to the lateral control of the bicycle through the steering input.
+    \item \textbf{Load transfer:} This referst to the longitudinal load transfer as a result of longitudinal acceleration.
+        %
+        This can be caused by wrong control inputs on brake use, front collisions, objects stuck on the front wheel, etc.
+    \item \textbf{Tyre friction:} Forces acting in the tyre-ground interface, principally grip and normal.
+        %
+        Its failure is understood as a loss of traction.
+    \item \textbf{Contact forces:} All forces that interact with the human-bicycle system as contact inputs (e.g. collisions, wheel interactions different from friction)
+    \item \textbf{Aerodynamic forces:} Aerodynamic forces which are studied as a resultant in the centre of pressure of the system.
+\end{itemize}
+
+
+\section{Important notes}
 
 \subsection{Control interfaces}
 
@@ -146,6 +161,28 @@ Additionally, the bicycle itself is a dynamic system which can present excitatio
         %
         If the control input is not precise, the system experiences excessive braking force, over its load transfer limits.
 \end{itemize}
+
+
+\subsection{Motion of the bicycle}
+
+This is related to the main motion of the rear frame of the bicycle while the crash is occuring.
+%
+Due to the dynamics of the bicycle, and following the common simplification to its analysis, we find two main motions related to the degrees of freedom: pitch-over and roll-over.
+%
+Additionally, the roll-over motion includes its own sub-classification according to the direction of rotation with respect to the initial motion.
+% 
+Please visit \url{https://youtube.com/shorts/_etyqSpH10c?feature=shared} to watch an example of a crash where the roll angle is negative with respect to the intended turn.
+%
+This is particularly challenging to represent in a normal drawing so the visual explanation is on the make, on Figure \ref{fig: highside} it is possible to see the main schematics of this kind of crash.
+
+\begin{itemize}
+    \item \textbf{Pitch-over (P):} The main characteristic of this motion is one of the wheels lifting from the ground, following a trajectory that finishes with the front wheel behind the rear wheel.
+    \item \textbf{High-side (H):} Characterised for a sudden deceleration of the wheel while in lateral motion, which leads to a violent negative roll rate with respect to the direction of the initial motion.
+    \item \textbf{Low-side (L):} The human-bicycle system follows an excessive roll rate in the same direction as at the beginning.
+\end{itemize}
+
+Please note that in Pitch-over and High-side motions, the rider is abruptly ejected from the bicycle.
+
 
 
 
