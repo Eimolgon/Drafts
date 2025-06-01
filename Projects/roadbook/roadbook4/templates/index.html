@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rally Roadbook Generator</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"/>
+    <style>
+        body { padding: 20px; }
+        #map { height: 600px; }
+        #preview { height: 600px; overflow-y: auto; border: 1px solid #ddd; padding: 10px; }
+        .toolbar { margin-bottom: 10px; }
+        .tulip-preview { width: 50px; height: 20px; border: 1px solid #ccc; display: inline-block; }
+        .column { display: inline-block; vertical-align: top; }
+        .distance-col { width: 30%; }
+        .tulip-col { width: 20%; }
+        .notes-col { width: 50%; }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <h1>Rally Roadbook Generator</h1>
+        
+        <div class="row">
+            <div class="col-md-6">
+                <div class="toolbar">
+                    <select id="profile" class="form-select form-select-sm" style="width: auto; display: inline-block;">
+                        <option value="driving-car">Motorcycle</option>
+                        <option value="cycling-regular">Bicycle (Road)</option>
+                        <option value="cycling-mountain">Bicycle (Mountain)</option>
+                        <option value="foot-walking">Walking</option>
+                    </select>
+                    <button id="add-point" class="btn btn-sm btn-primary">Add Route Point</button>
+                    <button id="clear-route" class="btn btn-sm btn-danger">Clear Route</button>
+                    <button id="update-preview" class="btn btn-sm btn-success">Update Preview</button>
+                    <button id="export-pdf" class="btn btn-sm btn-info">Export PDF</button>
+                </div>
+                <div id="map"></div>
+            </div>
+            <div class="col-md-6">
+                <h3>Roadbook Preview</h3>
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" id="unit-toggle" checked>
+                    <label class="form-check-label" for="unit-toggle">Use Kilometers (uncheck for Meters)</label>
+                </div>
+                <div id="preview"></div>
+            </div>
+        </div>
+        
+        <!-- Tulip Editor Modal -->
+        <div class="modal fade" id="tulipEditorModal" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Edit Tulip Diagram</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label class="form-label">Direction</label>
+                            <select class="form-select" id="tulip-direction">
+                                <option value="straight">Straight</option>
+                                <option value="left">Left</option>
+                                <option value="right">Right</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Icons</label>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="icon-house">
+                                <label class="form-check-label" for="icon-house">House</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="icon-river">
+                                <label class="form-check-label" for="icon-river">River</label>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Preview</label>
+                            <div id="tulip-preview" class="tulip-preview"></div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-primary" id="save-tulip">Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script>
+        // Initialize the map
+        const map = L.map('map').setView([51.505, -0.09], 13);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+        
+        // Route variables
+        let routePoints = [];
+        let routeLine = null;
+        let markers = [];
+        let currentEditingTulipIndex = -1;
+        let tulips = [];
+        let notes = [];
+        
+        // DOM elements
+        const addPointBtn = document.getElementById('add-point');
+        const clearRouteBtn = document.getElementById('clear-route');
+        const updatePreviewBtn = document.getElementById('update-preview');
+        const exportPdfBtn = document.getElementById('export-pdf');
+        const previewDiv = document.getElementById('preview');
+        const profileSelect = document.getElementById('profile');
+        const unitToggle = document.getElementById('unit-toggle');
+        
+        // Event listeners
+        addPointBtn.addEventListener('click', addRoutePoint);
+        clearRouteBtn.addEventListener('click', clearRoute);
+        updatePreviewBtn.addEventListener('click', updatePreview);
+        exportPdfBtn.addEventListener('click', exportPdf);
+        
+        // Add route point at current map center
+        function addRoutePoint() {
+            const center = map.getCenter();
+            routePoints.push([center.lat, center.lng]);
+            updateRoute();
+        }
+        
+        // Clear the current route
+        function clearRoute() {
+            routePoints = [];
+            if (routeLine) {
+                map.removeLayer(routeLine);
+                routeLine = null;
+            }
+            markers.forEach(marker => map.removeLayer(marker));
+            markers = [];
+            previewDiv.innerHTML = '';
+            tulips = [];
+            notes = [];
+        }
+        
+        // Update the route on the map
+        function updateRoute() {
+            // Remove existing route and markers
+            if (routeLine) {
+                map.removeLayer(routeLine);
+            }
+            markers.forEach(marker => map.removeLayer(marker));
+            markers = [];
+            
+            // Add markers for each point
+            routePoints.forEach(point => {
+                const marker = L.marker([point[0], point[1]]).addTo(map);
+                markers.push(marker);
+            });
+            
+            // If we have at least 2 points, draw the route
+            if (routePoints.length >= 2) {
+                fetch('/generate_route', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        coordinates: routePoints,
+                        profile: profileSelect.value
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.error) {
+                        alert(data.error);
+                        return;
+                    }
+                    
+                    // Draw the route
+                    const coordinates = data.features[0].geometry.coordinates.map(coord => [coord[1], coord[0]]);
+                    routeLine = L.polyline(coordinates, {color: 'red'}).addTo(map);
+                    map.fitBounds(routeLine.getBounds());
+                    
+                    // Prepare segments for preview
+                    const segments = prepareSegments(data.features[0].properties.segments);
+                    updatePreviewContent(segments);
+                });
+            }
+        }
+        
+        // Prepare route segments for display
+        function prepareSegments(routeSegments) {
+            return routeSegments.map(segment => {
+                return {
+                    distance: segment.distance,
+                    // In a real app, we'd extract more info from the segment
+                };
+            });
+        }
+        
+        // Update the preview content
+        function updatePreviewContent(segments) {
+            previewDiv.innerHTML = '';
+            
+            segments.forEach((segment, index) => {
+                const row = document.createElement('div');
+                row.className = 'row mb-2';
+                
+                // Distance column
+                const distanceCol = document.createElement('div');
+                distanceCol.className = 'col-2';
+                const distance = unitToggle.checked ? 
+                    (segment.distance / 1000).toFixed(1) + 'km' : 
+                    Math.round(segment.distance) + 'm';
+                distanceCol.textContent = distance;
+                
+                // Tulip column
+                const tulipCol = document.createElement('div');
+                tulipCol.className = 'col-3';
+                const tulipBtn = document.createElement('button');
+                tulipBtn.className = 'btn btn-sm btn-outline-secondary';
+                tulipBtn.innerHTML = tulips[index] ? 'Edit Tulip' : 'Add Tulip';
+                tulipBtn.addEventListener('click', () => editTulip(index));
+                tulipCol.appendChild(tulipBtn);
+                
+                // Notes column
+                const notesCol = document.createElement('div');
+                notesCol.className = 'col-7';
+                const notesInput = document.createElement('input');
+                notesInput.type = 'text';
+                notesInput.className = 'form-control form-control-sm';
+                notesInput.placeholder = 'Enter notes...';
+                if (notes[index]) notesInput.value = notes[index];
+                notesInput.addEventListener('change', (e) => {
+                    notes[index] = e.target.value;
+                });
+                notesCol.appendChild(notesInput);
+                
+                // Add columns to row
+                row.appendChild(distanceCol);
+                row.appendChild(tulipCol);
+                row.appendChild(notesCol);
+                
+                previewDiv.appendChild(row);
+            });
+        }
+        
+        // Edit tulip diagram
+        function editTulip(index) {
+            currentEditingTulipIndex = index;
+            const modal = new bootstrap.Modal(document.getElementById('tulipEditorModal'));
+            modal.show();
+        }
+        
+        // Update preview
+        function updatePreview() {
+            if (routePoints.length >= 2) {
+                updateRoute();
+            } else {
+                alert('Please add at least two route points first.');
+            }
+        }
+        
+        // Export to PDF
+        function exportPdf() {
+            if (routePoints.length < 2) {
+                alert('Please create a route first.');
+                return;
+            }
+            
+            // Prepare data for PDF generation
+            const routeData = {
+                segments: tulips.map((tulip, index) => ({
+                    distance: 1000, // In a real app, we'd use actual segment distances
+                })),
+                unit: unitToggle.checked ? 'km' : 'm'
+            };
+            
+            fetch('/generate_pdf', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    route: routeData,
+                    tulips: tulips,
+                    notes: notes,
+                    unit: unitToggle.checked ? 'km' : 'm'
+                })
+            })
+            .then(response => {
+                if (response.ok) return response.blob();
+                throw new Error('PDF generation failed');
+            })
+            .then(blob => {
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'roadbook.pdf';
+                document.body.appendChild(a);
+                a.click();
+                window.URL.revokeObjectURL(url);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Failed to generate PDF');
+            });
+        }
+        
+        // Initialize tulip editor save button
+        document.getElementById('save-tulip').addEventListener('click', () => {
+            const direction = document.getElementById('tulip-direction').value;
+            const icons = [];
+            if (document.getElementById('icon-house').checked) icons.push('house');
+            if (document.getElementById('icon-river').checked) icons.push('river');
+            
+            tulips[currentEditingTulipIndex] = {
+                direction,
+                icons
+            };
+            
+            bootstrap.Modal.getInstance(document.getElementById('tulipEditorModal')).hide();
+        });
+    </script>
+</body>
+</html>

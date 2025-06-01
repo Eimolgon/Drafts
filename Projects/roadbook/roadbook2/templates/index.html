@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Rally Roadbook Generator</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+  />
+  <style>
+    body,
+    html {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: Arial, sans-serif;
+    }
+    #map {
+      width: 60%;
+      height: 100vh;
+      float: left;
+    }
+    #sidebar {
+      width: 40%;
+      height: 100vh;
+      float: left;
+      display: flex;
+      flex-direction: column;
+      border-left: 1px solid #ccc;
+      padding: 10px;
+      box-sizing: border-box;
+    }
+    #controls {
+      margin-bottom: 10px;
+    }
+    #instructions {
+      flex-grow: 1;
+      overflow-y: auto;
+      border: 1px solid #ccc;
+      padding: 10px;
+      margin-bottom: 10px;
+      background: #fff;
+    }
+    #preview {
+      height: 200px;
+      border: 1px solid #ccc;
+      overflow: auto;
+      font-size: 12px;
+      background: #f9f9f9;
+      padding: 5px;
+    }
+    .instruction {
+      border-bottom: 1px solid #ddd;
+      margin-bottom: 6px;
+      padding-bottom: 6px;
+    }
+    .instruction input {
+      width: 100%;
+      margin-top: 4px;
+      box-sizing: border-box;
+    }
+    button {
+      margin-right: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div id="map"></div>
+  <div id="sidebar">
+    <div id="controls">
+      <label for="profileSelect">Profile:</label>
+      <select id="profileSelect">
+        <option value="cycling-regular">Bicycle</option>
+        <option value="driving-motorcycle">Motorcycle</option>
+      </select>
+      <button id="btnUpdate">Update Preview (U)</button>
+      <button id="btnExport">Export PDF (E)</button>
+      <button id="btnClear">Clear Markers</button>
+    </div>
+    <div id="instructions"></div>
+    <div id="preview">Roadbook preview will appear here...</div>
+  </div>
+
+  <script
+    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+  ></script>
+  <script>
+    const map = L.map("map").setView([45.0, 5.0], 13);
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png").addTo(map);
+
+    let waypoints = [];
+    let markers = [];
+    let instructions = [];
+
+    function addMarker(latlng) {
+      const marker = L.marker(latlng, { draggable: true }).addTo(map);
+      marker.on("dragend", () => updateWaypoints());
+      marker.on("contextmenu", () => {
+        map.removeLayer(marker);
+        markers = markers.filter((m) => m !== marker);
+        updateWaypoints();
+      });
+      markers.push(marker);
+      updateWaypoints();
+    }
+
+    function updateWaypoints() {
+      waypoints = markers.map((m) => {
+        const pos = m.getLatLng();
+        return { lat: pos.lat, lng: pos.lng };
+      });
+    }
+
+    map.on("click", (e) => {
+      addMarker(e.latlng);
+    });
+
+    async function fetchRoute() {
+      if (waypoints.length < 2) {
+        alert("Add at least 2 points.");
+        return;
+      }
+      const profile = document.getElementById("profileSelect").value;
+      const response = await fetch("/route", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ waypoints, profile }),
+      });
+      if (!response.ok) {
+        alert("Routing failed");
+        return;
+      }
+      const data = await response.json();
+      instructions = data.instructions;
+      showInstructions();
+      showPreview();
+      drawRouteOnMap(data.geometry);
+    }
+
+    let routeLine;
+    function drawRouteOnMap(geometry) {
+      if (routeLine) {
+        map.removeLayer(routeLine);
+      }
+      routeLine = L.geoJSON(geometry, { style: { color: "red", weight: 4 } }).addTo(map);
+    }
+
+    function showInstructions() {
+      const container = document.getElementById("instructions");
+      container.innerHTML = "";
+      instructions.forEach((instr, i) => {
+        const div = document.createElement("div");
+        div.className = "instruction";
+
+        const distText = `Dist: ${instr.distance} km, Total: ${instr.cumulative} km`;
+        const label = document.createElement("label");
+        label.textContent = distText;
+        div.appendChild(label);
+
+        const noteInput = document.createElement("input");
+        noteInput.type = "text";
+        noteInput.placeholder = "Notes...";
+        noteInput.value = instr.note || "";
+        noteInput.addEventListener("input", () => {
+          instructions[i].note = noteInput.value;
+          showPreview();
+        });
+        div.appendChild(noteInput);
+        container.appendChild(div);
+      });
+    }
+
+    function generateTulipSVG(instr) {
+      // Return SVG string for given instruction type & modifier
+      const type = instr.type || "turn";
+      const mod = instr.modifier || null;
+
+      if (type === "turn") {
+        if (mod === "left") {
+          return `<svg width="60" height="60" xmlns="http://www.w3.org/2000/svg"><polyline points="50,55 30,30 50,5" stroke="black" stroke-width="4" fill="none"/></svg>`;
+        }
+        if (mod === "right") {
+          return `<svg width="60" height="60" xmlns="http://www.w3.org/2000/svg"><polyline points="10,55 30,30 10,5" stroke="black" stroke-width="4" fill="none"/></svg>`;
+        }
+        return `<svg width="60" height="60" xmlns="http://www.w3.org/2000/svg"><line x1="30" y1="55" x2="30" y2="5" stroke="black" stroke-width="4"/></svg>`;
+      }
+      if (type === "roundabout") {
+        return `<svg width="60" height="60" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="20" stroke="black" stroke-width="4" fill="none"/><line x1="30" y1="50" x2="30" y2="10" stroke="black" stroke-width="4"/></svg>`;
+      }
+      if (type === "depart") {
+        return `<svg width="60" height="60" xmlns="http://www.w3.org/2000/svg"><line x1="30" y1="55" x2="30" y2="5" stroke="black" stroke-width="4"/><polygon points="30,5 25,15 35,15" fill="black"/></svg>`;
+      }
+      return `<svg width="60" height="60" xmlns="http://www.w3.org/2000/svg"><line x1="30" y1="55" x2="30" y2="5" stroke="black" stroke-width="4"/></svg>`;
+    }
+
+    function showPreview() {
+      const preview = document.getElementById("preview");
+      preview.innerHTML = "";
+
+      instructions.forEach((instr) => {
+        const wrapper = document.createElement("div");
+        wrapper.style.display = "flex";
+        wrapper.style.borderBottom = "1px solid #ccc";
+        wrapper.style.padding = "5px";
+
+        const left = document.createElement("div");
+        left.style.width = "20%";
+        left.textContent = `${instr.distance} km\nTotal: ${instr.cumulative} km`;
+        wrapper.appendChild(left);
+
+        const middle = document.createElement("div");
+        middle.style.width = "20%";
+        middle.innerHTML = generateTulipSVG(instr);
+        wrapper.appendChild(middle);
+
+        const right = document.createElement("div");
+        right.style.width = "60%";
+        right.textContent = instr.note || "";
+        wrapper.appendChild(right);
+
+        preview.appendChild(wrapper);
+      });
+    }
+
+    document.getElementById("btnUpdate").onclick = fetchRoute;
+    document.getElementById("btnExport").onclick = async () => {
+      if (instructions.length === 0) {
+        alert("Generate instructions first");
+        return;
+      }
+      const resp = await fetch("/generate_pdf", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ instructions }),
+      });
+      if (!resp.ok) {
+        alert("PDF generation failed");
+        return;
+      }
+      const blob = await resp.blob();
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "roadbook.pdf";
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      window.URL.revokeObjectURL(url);
+    };
+
+    document.getElementById("btnClear").onclick = () => {
+      markers.forEach((m) => map.removeLayer(m));
+      markers = [];
+      waypoints = [];
+      instructions = [];
+      document.getElementById("instructions").innerHTML = "";
+      document.getElementById("preview").innerHTML = "Roadbook preview will appear here...";
+      if(routeLine) {
+        map.removeLayer(routeLine);
+        routeLine = null;
+      }
+    };
+
+    // Keyboard shortcuts
+    window.addEventListener("keydown", (e) => {
+      if (e.key === "u" || e.key === "U") fetchRoute();
+      if (e.key === "e" || e.key === "E") document.getElementById("btnExport").click();
+    });
+  </script>
+</body>
+</html>
+

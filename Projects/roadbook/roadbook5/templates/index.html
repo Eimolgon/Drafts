@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Rally Roadbook Generator</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"/>
+    <style>
+        body { margin: 0; padding: 0; }
+        #container { display: flex; height: 100vh; }
+        #map { flex: 2; }
+        #sidebar { flex: 1; padding: 10px; overflow-y: auto; }
+        .toolbar { margin-bottom: 10px; }
+        .roadbook-entry { display: flex; margin-bottom: 10px; }
+        .distance-col { width: 20%; }
+        .tulip-col { width: 30%; }
+        .notes-col { width: 50%; }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <div id="map"></div>
+        <div id="sidebar">
+            <div class="toolbar">
+                <select id="profile">
+                    <option value="motorcycle">Motorcycle</option>
+                    <option value="bicycle-road">Bicycle (Road)</option>
+                    <option value="bicycle-mountain">Bicycle (Mountain)</option>
+                </select>
+                <button id="export-pdf">Export PDF</button>
+                <div>
+                    <input type="checkbox" id="use-km" checked>
+                    <label for="use-km">Use Kilometers</label>
+                </div>
+            </div>
+            <div id="roadbook-preview"></div>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script>
+        // Initialize map
+        const map = L.map('map').setView({{ center|tojson }}, {{ zoom }});
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        // Route variables
+        let routePoints = [];
+        let routeLine = null;
+        let markers = [];
+
+        // Add route point on map click
+        map.on('click', function(e) {
+            routePoints.push([e.latlng.lat, e.latlng.lng]);
+            updateRoute();
+        });
+
+        // Update route display
+        function updateRoute() {
+            // Clear existing route
+            if (routeLine) map.removeLayer(routeLine);
+            markers.forEach(marker => map.removeLayer(marker));
+            markers = [];
+
+            // Add markers
+            routePoints.forEach(point => {
+                markers.push(L.marker([point[0], point[1]]).addTo(map));
+            });
+
+            // Draw route if we have at least 2 points
+            if (routePoints.length >= 2) {
+                fetch('/generate_route', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        coordinates: routePoints,
+                        profile: document.getElementById('profile').value
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.error) throw new Error(data.error);
+                    
+                    // Draw route
+                    const coordinates = data.features[0].geometry.coordinates
+                        .map(coord => [coord[1], coord[0]]);
+                    routeLine = L.polyline(coordinates, {color: 'red'}).addTo(map);
+                    
+                    // Update preview
+                    updatePreview(data.features[0].properties.segments);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    document.getElementById('roadbook-preview').innerHTML = 
+                        `<div class="error">${error.message}</div>`;
+                });
+            }
+        }
+
+        // Update roadbook preview
+        function updatePreview(segments) {
+            const preview = document.getElementById('roadbook-preview');
+            preview.innerHTML = '';
+            
+            segments.forEach((segment, index) => {
+                const entry = document.createElement('div');
+                entry.className = 'roadbook-entry';
+                
+                const distance = document.createElement('div');
+                distance.className = 'distance-col';
+                const unit = document.getElementById('use-km').checked ? 'km' : 'm';
+                const distValue = unit === 'km' ? 
+                    (segment.distance / 1000).toFixed(1) : 
+                    Math.round(segment.distance);
+                distance.textContent = `${distValue}${unit}`;
+                
+                const tulip = document.createElement('div');
+                tulip.className = 'tulip-col';
+                tulip.textContent = 'Tulip diagram placeholder';
+                
+                const notes = document.createElement('div');
+                notes.className = 'notes-col';
+                const notesInput = document.createElement('input');
+                notesInput.type = 'text';
+                notesInput.placeholder = 'Enter notes...';
+                notes.appendChild(notesInput);
+                
+                entry.appendChild(distance);
+                entry.appendChild(tulip);
+                entry.appendChild(notes);
+                preview.appendChild(entry);
+            });
+        }
+
+        // Export PDF
+        document.getElementById('export-pdf').addEventListener('click', function() {
+            if (routePoints.length < 2) {
+                alert('Please create a route first');
+                return;
+            }
+
+            const segments = [];
+            // In a real app, you would use actual segment data
+            for (let i = 0; i < routePoints.length - 1; i++) {
+                segments.push({ distance: i * 1000 }); // Dummy data
+            }
+
+            fetch('/generate_pdf', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    route: { segments: segments },
+                    tulips: [{ direction: 'straight' }], // Dummy data
+                    notes: ['Sample note'], // Dummy data
+                    unit: document.getElementById('use-km').checked ? 'km' : 'm'
+                })
+            })
+            .then(response => response.blob())
+            .then(blob => {
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'roadbook.pdf';
+                document.body.appendChild(a);
+                a.click();
+                window.URL.revokeObjectURL(url);
+            });
+        });
+    </script>
+</body>
+</html>

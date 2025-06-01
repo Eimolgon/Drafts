@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rally Roadbook Generator</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.css" />
+  <style>
+    body { margin: 0; font-family: Arial, sans-serif; display: flex; height: 100vh; }
+    #map { width: 60%; height: 100%; }
+    #sidebar { width: 40%; height: 100%; display: flex; flex-direction: column; border-left: 1px solid #ccc; }
+    #controls { padding: 1em; background: #f9f9f9; }
+    #roadbook, #preview { flex: 1; overflow-y: auto; padding: 1em; background: #fff; }
+    .instruction { margin-bottom: 0.5em; border-bottom: 1px solid #ccc; padding: 0.5em 0; display: flex; justify-content: space-between; align-items: center; }
+    .instruction input { width: 40%; }
+    .tulip { width: 60px; height: 60px; margin-right: 10px; }
+    iframe { width: 100%; height: 100%; border: none; }
+    .marker-list { font-size: 0.9em; margin-top: 0.5em; }
+  </style>
+</head>
+<body>
+  <div id="map"></div>
+  <div id="sidebar">
+    <div id="controls">
+      <label for="mode">Mode:</label>
+      <select id="mode">
+        <option value="cycling-regular">Bicycle</option>
+        <option value="driving-car">Motorcycle</option>
+      </select>
+      <button onclick="updateRoute()">Update Preview (U)</button>
+      <button onclick="exportRoadbook()">Export PDF (E)</button>
+      <div class="marker-list" id="markerList"></div>
+    </div>
+    <div id="roadbook">
+      <div id="instructions"></div>
+    </div>
+    <div id="preview">
+      <iframe id="previewFrame"></iframe>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.min.js"></script>
+  <script>
+    const map = L.map('map').setView([45.0, 5.0], 13);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+
+    let waypoints = [];
+    let markers = [];
+    let routingControl;
+    let routeSummary = [];
+
+    function addWaypoint(latlng) {
+      waypoints.push(latlng);
+
+      const marker = L.marker(latlng, { draggable: true }).addTo(map);
+      marker.on('dragend', function (e) {
+        const index = markers.indexOf(marker);
+        if (index !== -1) {
+          waypoints[index] = e.target.getLatLng();
+          updateRoute();
+        }
+      });
+      marker.on('contextmenu', function () {
+        const index = markers.indexOf(marker);
+        if (index !== -1) {
+          map.removeLayer(marker);
+          markers.splice(index, 1);
+          waypoints.splice(index, 1);
+          updateRoute();
+        }
+      });
+
+      markers.push(marker);
+      updateMarkerList();
+    }
+
+    function updateMarkerList() {
+      const list = document.getElementById('markerList');
+      list.innerHTML = '<b>Waypoints:</b><br>' + markers.map((m, i) => `#${i + 1}: (${m.getLatLng().lat.toFixed(4)}, ${m.getLatLng().lng.toFixed(4)})`).join('<br>');
+    }
+
+    map.on('click', function (e) {
+      addWaypoint(e.latlng);
+      updateRoute();
+    });
+
+    function getTulipSVG(type) {
+      const svgBase = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">';
+      const svgEnd = '</svg>';
+      let path = '';
+      switch (type) {
+        case 0: path = '<line x1="50" y1="100" x2="50" y2="0" stroke="black" stroke-width="6" />'; break;
+        case 1: path = '<path d="M50 100 L30 50 L50 0" stroke="black" stroke-width="6" fill="none" />'; break;
+        case 2: path = '<path d="M50 100 L70 50 L50 0" stroke="black" stroke-width="6" fill="none" />'; break;
+        case 3: path = '<path d="M50 100 Q30 50 50 0" stroke="black" stroke-width="6" fill="none" />'; break;
+        case 4: path = '<path d="M50 100 Q70 50 50 0" stroke="black" stroke-width="6" fill="none" />'; break;
+        case 5: path = '<circle cx="50" cy="50" r="30" stroke="black" stroke-width="6" fill="none" />'; break;
+        case 6: path = '<path d="M50 100 A40 40 0 0 1 90 60" stroke="black" stroke-width="6" fill="none" />'; break;
+        default: path = '<circle cx="50" cy="50" r="10" stroke="black" stroke-width="4" fill="none" />'; break;
+      }
+      return svgBase + path + svgEnd;
+    }
+
+    function updateRoute() {
+      const mode = document.getElementById('mode').value;
+      if (routingControl) {
+        map.removeControl(routingControl);
+      }
+      if (waypoints.length < 2) return;
+
+      routingControl = L.Routing.control({
+        waypoints: waypoints,
+        router: L.Routing.openrouteservice('API_KEY', { profile: mode }),
+        addWaypoints: false,
+        lineOptions: { styles: [{ color: 'red', weight: 4 }] },
+        routeWhileDragging: false,
+        createMarker: function () { return null; },
+      }).addTo(map);
+
+      routingControl.on('routesfound', function (e) {
+        const route = e.routes[0];
+        routeSummary = [];
+        let cumulative = 0;
+        const container = document.getElementById('instructions');
+        container.innerHTML = '';
+
+        for (let i = 0; i < route.instructions.length; i++) {
+          const instr = route.instructions[i];
+          const dist = (instr.distance / 1000).toFixed(2);
+          cumulative += parseFloat(dist);
+          routeSummary.push({ dist, cumulative: cumulative.toFixed(2), note: '', type: instr.type });
+
+          const div = document.createElement('div');
+          div.className = 'instruction';
+
+          const svg = getTulipSVG(instr.type);
+          const svgEl = document.createElement('div');
+          svgEl.className = 'tulip';
+          svgEl.innerHTML = svg;
+
+          const noteInput = document.createElement('input');
+          noteInput.type = 'text';
+          noteInput.placeholder = 'Enter note';
+          noteInput.dataset.step = i;
+          noteInput.onchange = () => routeSummary[i].note = noteInput.value;
+
+          div.appendChild(svgEl);
+          div.innerHTML += `
+            <div>
+              <div>Dist: ${dist} km</div>
+              <div>Tot: ${cumulative.toFixed(2)} km</div>
+            </div>
+          `;
+          div.appendChild(noteInput);
+          container.appendChild(div);
+        }
+      });
+    }
+
+    function exportRoadbook() {
+      fetch('/export', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ steps: routeSummary })
+      })
+      .then(res => res.blob())
+      .then(blob => {
+        const url = window.URL.createObjectURL(blob);
+        document.getElementById('previewFrame').src = url;
+
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'roadbook.pdf';
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+      });
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'u' || e.key === 'U') updateRoute();
+      if (e.key === 'e' || e.key === 'E') exportRoadbook();
+    });
+  </script>
+  <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+</body>
+</html>
+
