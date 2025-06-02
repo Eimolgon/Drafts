@@ -6,7 +6,7 @@ import svgwrite
 
 app = Flask(__name__)
 
-ORS_API_KEY = "5b3ce3597851110001cf6248b820b778a0974d0e8430fc6d7c921bf9"  # <-- Replace here
+ORS_API_KEY = "API HERE"  # <-- Replace here
 
 @app.route('/')
 def index():
