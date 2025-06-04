@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Real Map Tracker</title>
+    <style>
+        body { font-family: Arial; margin: 0; padding: 20px; }
+        .container { display: flex; }
+        .map-container { flex: 2; }
+        .data-panel { flex: 1; padding: 20px; }
+        .map-img { width: 100%; height: 600px; object-fit: cover; }
+        .map-controls { display: flex; gap: 10px; margin-bottom: 10px; }
+        .map-controls button { padding: 10px; }
+        .click-form { position: relative; }
+        .click-form img { display: block; }
+        .click-form .overlay { 
+            position: absolute; 
+            top: 0; left: 0; 
+            width: 100%; height: 100%; 
+            cursor: crosshair;
+        }
+        .data-columns { display: flex; }
+        .data-column { flex: 1; padding: 10px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Map Section -->
+        <div class="map-container">
+            <div class="map-controls">
+                <form method="post">
+                    <button type="submit" name="move_map" value="north">↑ North</button>
+                    <button type="submit" name="move_map" value="south">↓ South</button>
+                    <button type="submit" name="move_map" value="east">→ East</button>
+                    <button type="submit" name="move_map" value="west">← West</button>
+                    <button type="submit" name="move_map" value="zoom_in">+ Zoom In</button>
+                    <button type="submit" name="move_map" value="zoom_out">- Zoom Out</button>
+                </form>
+            </div>
+            
+            <form method="post" class="click-form">
+                <input type="hidden" name="add_point" value="true">
+                <input type="hidden" name="lat" id="click-lat">
+                <input type="hidden" name="lng" id="click-lng">
+                {% if map_img %}
+                <img src="data:image/png;base64,{{ map_img }}" alt="Map" class="map-img" usemap="#clickmap">
+                {% endif %}
+                
+                <!-- Clickable overlay -->
+                <map name="clickmap">
+                    <area shape="rect" coords="0,0,800,600" 
+                          onclick="document.getElementById('click-lat').value='{{ center.lat }}'; 
+                                   document.getElementById('click-lng').value='{{ center.lng }}';
+                                   this.form.submit();" 
+                          style="cursor: crosshair;">
+                </map>
+            </form>
+        </div>
+        
+        <!-- Data Panel -->
+        <div class="data-panel">
+            <h2>Points ({{ points|length }})</h2>
+            <div class="data-columns">
+                <div class="data-column">
+                    <h3>Distance</h3>
+                    {% for point in points %}
+                    <div>Point {{ loop.index }}: {% if loop.index0 > 0 %}{{ point.distance }}m{% else %}Start{% endif %}</div>
+                    {% endfor %}
+                </div>
+                <div class="data-column">
+                    <h3>Direction</h3>
+                    {% for point in points %}
+                    <div>Point {{ loop.index }}: {% if loop.index0 > 0 %}{{ point.direction }}{% endif %}</div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
