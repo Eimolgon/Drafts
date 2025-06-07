@@ -7,7 +7,7 @@ from glob import glob
 
 # -------- CONFIG --------
 # directory with YOLO .txt files
-label_dir = "/home/eimolgon/Downloads/BikeCrash-Yolo1/labels/"
+label_dir = "/home/eimolgon/Documents/Drafts/ellipseTrack/Data/5-ytcrash-yolo/labels/train"
 image_dims = (1280, 720)         # (width, height) for denormalizing
 class_names = ["front_wheel", "rear_wheel"]
 # ------------------------
