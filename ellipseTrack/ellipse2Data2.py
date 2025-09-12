@@ -107,7 +107,7 @@ def plot_data(tracking_data, filtered_data, show_raw=False, absolute_diff=True):
     # diff_metrics = calculate_differences(filtered_data, absolute_diff)
     
     # Plot X Position
-    ax1 = plt.subplot(2, 3, 1)
+    ax1 = plt.subplot(1, 3, 1)
     for class_id, data in tracking_data.items():
         if class_id == 0:
             class_name = 'Front'
@@ -125,7 +125,7 @@ def plot_data(tracking_data, filtered_data, show_raw=False, absolute_diff=True):
     ax1.grid(True)
     
     # Plot Y Position (inverted for user-friendly view)
-    ax2 = plt.subplot(2, 3, 2)
+    ax2 = plt.subplot(1, 3, 2)
     for class_id, data in tracking_data.items():
         if show_raw:
             ax2.plot(data['frames'], data['y_pos'], '-', color=ellipse_colors[class_id], 
@@ -138,7 +138,7 @@ def plot_data(tracking_data, filtered_data, show_raw=False, absolute_diff=True):
     ax2.grid(True)
     
     # Plot Major/Minor Axis Ratio
-    ax3 = plt.subplot(2, 3, 3)
+    ax3 = plt.subplot(1, 3, 3)
     for class_id, data in tracking_data.items():
 
         if class_id == 0:
@@ -253,39 +253,45 @@ def create_4column_csv(tracking_data, filtered_data, output_file):
                 'y': tracking_data[1]['y_pos'][i]
             }
     
-    # Create the 4-column data structure
+    # Create the 5-column data structure
     data = []
     for frame in all_frames:
         # Get ellipse 0 data or use NaN if missing
         if frame in ellipse0_data:
-            ellipse0_str = f"[{ellipse0_data[frame]['x']:.2f}, {ellipse0_data[frame]['y']:.2f}]"
+            ellipse0_x = ellipse0_data[frame]['x']
+            ellipse0_y = ellipse0_data[frame]['y']
         else:
-            ellipse0_str = "[nan, nan]"
+            ellipse0_x = np.nan
+            ellipse0_y = np.nan
         
         # Get ellipse 1 data or use NaN if missing
         if frame in ellipse1_data:
-            ellipse1_str = f"[{ellipse1_data[frame]['x']:.2f}, {ellipse1_data[frame]['y']:.2f}]"
+            ellipse1_x = ellipse1_data[frame]['x']
+            ellipse1_y = ellipse1_data[frame]['y']
         else:
-            ellipse1_str = "[nan, nan]"
+            ellipse1_x = np.nan
+            ellipse1_y = np.nan
         
         row = [
             frame,          # Feature 1 time
-            ellipse0_str,   # Feature 1 [x,y]
-            frame,          # Feature 2 time (same timestamp)
-            ellipse1_str    # Feature 2 [x,y]
+            ellipse0_x,     # Feature 1 x
+            ellipse0_y,     # Feature 1 y
+            ellipse1_x,     # Feature 2 x
+            ellipse1_y      # Feature 2 y
         ]
         data.append(row)
     
     # Create DataFrame and save as CSV
     df = pd.DataFrame(data, columns=[
-        'Feature1_time', 
-        'Feature1_[x,y]', 
-        'Feature2_time', 
-        'Feature2_[x,y]'
+        'Frame', 
+        'Feature1_x', 
+        'Feature1_y', 
+        'Feature2_x', 
+        'Feature2_y'
     ])
     
     df.to_csv(output_file, index=False)
-    print(f"4-column CSV saved to: {output_file}")
+    print(f"5-column CSV saved to: {output_file}")
     print(f"Total rows: {len(df)}")
     print(f"Columns: {', '.join(df.columns)}")
     print(f"Frames with ellipse 0 data: {len(ellipse0_data)}")
@@ -293,6 +299,11 @@ def create_4column_csv(tracking_data, filtered_data, output_file):
     print(f"Total unique frames: {len(all_frames)}")
     print("\nFirst 10 rows:")
     print(df.head(10))
+    
+    # Show data completeness statistics
+    print(f"\nData Completeness:")
+    print(f"Ellipse 0: {df['Feature1_x'].notna().sum()}/{len(df)} frames ({df['Feature1_x'].notna().mean()*100:.1f}%)")
+    print(f"Ellipse 1: {df['Feature2_x'].notna().sum()}/{len(df)} frames ({df['Feature2_x'].notna().mean()*100:.1f}%)")
     
     return df
 
