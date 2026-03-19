@@ -1,0 +1,64 @@
+\documentclass{article}
+\usepackage{graphicx} 
+\usepackage{geometry}
+\geometry{
+    a4paper,
+    total={170mm,257mm},
+    left=20mm,
+    top=20mm,
+}
+\usepackage[hidelinks]{hyperref}
+\usepackage{xcolor}
+\usepackage{natbib}
+\bibliographystyle{apalike}
+\usepackage{tikz}
+\usetikzlibrary{mindmap, trees}
+\usepackage{siunitx}
+\usepackage{xcolor}
+\usepackage{rotating}
+\usepackage{threeparttable}
+\usepackage{pdflscape}
+\usepackage{parskip}
+\usepackage{subcaption}
+\usepackage{tabularx}
+\usepackage{booktabs}
+\usepackage{authblk}
+\usepackage{longtable}
+\usepackage{ragged2e}
+\usepackage{multirow}
+\usepackage{makecell}
+\usepackage{float}
+\usepackage{array}
+\usepackage{adjustbox}
+\usepackage{subfiles}
+
+\newcolumntype{b}{X}
+\newcolumntype{s}{>{\hsize=.5\hsize}X}
+\newcolumntype{m}{>{\hsize=.75\hsize}X}
+
+\renewcommand{\arraystretch}{1.3}
+
+\title{A new title for a new article}
+
+
+\author[1]{Benjamín E. González T.}
+\author[1]{Gang member 1}
+\author[1]{Gang member 2}
+\author[1]{Gang member 3}
+%
+\affil[1]{\footnotesize{Department of Biomechanical Engineering, Delft University of Technology}}
+\date{}
+
+
+\begin{document}
+
+\maketitle
+
+\subfile{sections/0-abstract}
+\subfile{sections/1-introduction}
+\subfile{sections/2-methods}
+\subfile{sections/3-results}
+\subfile{sections/4-discussion}
+\subfile{sections/5-conclusion}
+
+\end{document}
