@@ -6,3 +6,4 @@
 *.blg
 *.env
 .vscode/
+*.gguf

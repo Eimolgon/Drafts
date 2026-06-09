@@ -1,7 +1,7 @@
 import yt_dlp
 from yt_dlp.utils import download_range_func
 
-cookie_path = r'{PATH_TO_COOKIES}/cookies.txt'
+#cookie_path = r'{PATH_TO_COOKIES}/cookies.txt'
 
 url = str(input('Paste your URL here: '))
 start_time = int(input('Paste yout start time (in seconds): '))
@@ -15,9 +15,9 @@ yt_opts = {
         'download_ranges': download_range_func(None, [(start_time,
                                                        end_time)]),
         'force_keyframes_at_cuts': True,
-        'format_sort': ['res:1080', 'ext:mp4:m4a'],
-        'cookiefile': cookie_path
-        }
+        'format_sort': ['res:1080', 'ext:mp4:m4a']}
+        #'cookiefile': cookie_path
+        #}
 
 with yt_dlp.YoutubeDL(yt_opts) as ydl:
     ydl.download(url)
